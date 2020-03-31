@@ -28,6 +28,12 @@ class Cube:
         self.position = position
         self.tag = tag
 
+    def draw_shade(self):
+        x = self.position[0] * s.cell_size * s.scale
+        y = self.position[1] * s.cell_size * s.scale
+        size = s.cell_size * s.scale
+        pygame.draw.rect(window, (20, 20, 20), (x, y, size, size))
+
     def draw(self):
         x = self.position[0] * s.cell_size * s.scale
         y = self.position[1] * s.cell_size * s.scale

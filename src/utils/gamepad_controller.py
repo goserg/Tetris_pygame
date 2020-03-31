@@ -25,6 +25,10 @@ class GamepadController:
         if self.enabled:
             return self.joystick.get_button(7)
 
+    def is_Y_pressed(self):
+        if self.enabled:
+            return self.joystick.get_button(3)
+
     def is_start_pressed(self):
         if self.enabled:
             return self.joystick.get_button(0)

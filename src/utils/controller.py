@@ -31,3 +31,7 @@ def get_direction():
         return -1, 0
     else:
         return 0, 0
+
+
+def is_Y_pressed():
+    return gamepad.is_Y_pressed()

@@ -7,6 +7,7 @@ import level
 import pygame
 import tetromino.generator
 from utils.gamepad_controller import GamepadController
+import shade
 
 pygame.init()
 
@@ -21,7 +22,9 @@ controller.keys = pygame.key.get_pressed()
 def draw():
     window.fill((0, 0, 0))
 
+    shade.draw()
     player.draw()
+
     level.draw()
     if s.grid:
         grid.draw()
@@ -31,6 +34,7 @@ def draw():
 
 run = True
 to_draw = True
+pause = False
 to_move_down = 0
 to_move = 0
 while run:
@@ -42,24 +46,48 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    if to_move > s.move_delay:
-        result = player.move()
-        if result == 1:
-            player = tetromino.generator.get_new()
-            to_move = 0
-        elif result != 0:
-            to_move = 0
-
-    if to_move_down == s.speed:
+    if controller.is_pause_pressed():
+        if not pause:
+            pause = True
+    if controller.is_Y_pressed() and pause:
+        pause = False
         to_move_down = 0
-        if player.move_down():
-            player = tetromino.generator.get_new()
+        to_move = 0
+
+    if player is None:
+        level.cubes.clear()
+        player = tetromino.generator.get_new()
+        border = Border()
+        to_move = 0
+        to_move_down = 0
+
+    if not pause:
+        if to_move > s.move_delay:
+            result = player.move()
+            if result == 1:
+                player = tetromino.generator.get_new()
+                to_move_down = 0
+                to_move = 0
+                continue
+            elif result != 0:
+                to_move = 0
+
+        if to_move_down > s.speed:
+            to_move_down = 0
+            if player.move_down():
+                player = tetromino.generator.get_new()
+
     to_draw = True
 
     if player is None:
         level.cubes.clear()
         player = tetromino.generator.get_new()
         border = Border()
+        to_move = 0
+        to_move_down = 0
+
+    if player:
+        shade.update_pos(player)
 
     if to_draw:
         draw()

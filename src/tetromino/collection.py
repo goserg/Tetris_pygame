@@ -152,15 +152,33 @@ class TypeO(Tetromino):
     def __init__(self):
         super().__init__()
         self.color = (240, 240, 0)
-        self.pos = (7, 2)
-        one = Cube((7, 2), self.color, "block")
-        two = Cube((self.pos[0], self.pos[1] - 1), self.color, "block")
-        three = Cube((self.pos[0] + 1, self.pos[1]), self.color, "block")
-        four = Cube((self.pos[0] + 1, self.pos[1] - 1), self.color, "block")
-        self.body.append(one)
-        self.body.append(two)
-        self.body.append(three)
-        self.body.append(four)
+        self.pos = (6, 1)
+        self.one = Cube(self.pos, self.color, "block")
+        self.two = Cube(self.pos, self.color, "block")
+        self.three = Cube(self.pos, self.color, "block")
+        self.four = Cube(self.pos, self.color, "block")
+        self.set_0_rotation()
+        self.body.append(self.one)
+        self.body.append(self.two)
+        self.body.append(self.three)
+        self.body.append(self.four)
+
+    def set_0_rotation(self):
+        x = self.pos[0]
+        y = self.pos[1]
+        self.one.position = (x, y)
+        self.two.position = (x, y + 1)
+        self.three.position = (x + 1, y)
+        self.four.position = (x + 1, y + 1)
+
+    def set_1_rotation(self):
+        self.set_0_rotation()
+
+    def set_2_rotation(self):
+        self.set_0_rotation()
+
+    def set_3_rotation(self):
+        self.set_0_rotation()
 
 
 class TypeS(Tetromino):
@@ -172,13 +190,12 @@ class TypeS(Tetromino):
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
-        self.set_1_rotation()
+        self.set_0_rotation()
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
         self.body.append(self.four)
-
-        self.state = 1
+        self.state = 0
 
     def set_0_rotation(self):
         x = self.pos[0]

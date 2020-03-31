@@ -1,5 +1,6 @@
 import utils.controller as controller
 import level
+import shade
 
 
 class Tetromino:
@@ -39,10 +40,12 @@ class Tetromino:
             return 0
         if direction == (0, -1):
             self.rotate()
+            shade.shade.rotate()
             for i in level.cubes:
                 for j in self.body:
                     if i.position == j.position:
                         self.rotate_back()
+                        shade.shade.rotate_back()
                         return
             return
         if direction == (-1, 0) or direction == (1, 0):
@@ -60,20 +63,10 @@ class Tetromino:
             for i in self.body:
                 x = i.position[0]
                 y = i.position[1]
-                i.position = x + direction[0], y + direction[1]
-        self.pos = self.pos[0] + direction[0], self.pos[1] + direction[1]
+                i.position = x + direction[0], y
+        self.pos = self.pos[0] + direction[0], self.pos[1]
         if direction == (0, 1):
             self.move_down()
-
-    def move_down_2(self):
-        for i in self.body:
-            x = i.position[0]
-            y = i.position[1]
-            y += 1
-            for j in level.cubes:
-                if j.position == (x, y):
-                    self.transfer_to_level()
-                    return 1
 
     def transfer_to_level(self):
         for cube in self.body:
