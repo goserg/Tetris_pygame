@@ -7,4 +7,7 @@ pygame 1.9.6 required
 
 Controls:  
 =keyboard(gamepad)=  
-Arrows(D-pad)
+Arrow left(D-pad left) - move left  
+Arrow right(D-pad right) - move right  
+Arrow up(D-pad up) - rotate  
+Space(A) - hard drop  
