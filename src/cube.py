@@ -2,6 +2,8 @@ import utils.settings as s
 from utils.window_manager import window
 import pygame
 
+# TODO change colors calculation
+
 
 def color_bottom(i):
     return int(i * 0.5)

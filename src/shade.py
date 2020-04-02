@@ -1,5 +1,3 @@
-import tetromino.collection
-import tetromino.tetromino
 import level
 
 

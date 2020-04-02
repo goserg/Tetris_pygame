@@ -14,21 +14,20 @@ class GamepadController:
 
     def get_hat(self):
         if self.enabled:
-            hat = self.joystick.get_hat(0)
-            hat_right = hat[0]
-            hut_up = hat[1]
-            if hat_right != 0:
-                return hat_right, 0
-            return 0, -hut_up
+            return self.joystick.get_hat(0)
 
     def is_pause_pressed(self):
         if self.enabled:
             return self.joystick.get_button(7)
 
+    def is_B_pressed(self):
+        if self.enabled:
+            return self.joystick.get_button(1)
+
     def is_Y_pressed(self):
         if self.enabled:
             return self.joystick.get_button(3)
 
-    def is_start_pressed(self):
+    def is_A_pressed(self):
         if self.enabled:
             return self.joystick.get_button(0)

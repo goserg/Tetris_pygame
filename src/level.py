@@ -39,7 +39,6 @@ def clear_lines():
     to_remove = []
     if not to_pop:
         return
-    print(score)
     for i in cubes:
         if i.tag == "block" and i.position[1] in to_pop:
             to_remove.append(i)

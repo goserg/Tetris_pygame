@@ -9,5 +9,6 @@ Controls:
 =keyboard(gamepad)=  
 Arrow left(D-pad left) - move left  
 Arrow right(D-pad right) - move right  
-Arrow up(D-pad up) - rotate  
+Arrow down(D-pad down) - move down  
+Arrow up(B) - rotate  
 Space(A) - hard drop  

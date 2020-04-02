@@ -1,15 +1,19 @@
 # game
 name = "Tetris"
-version = "0.1-dev-alpha"
-main_loop_delay = 50
-speed = 10  # 1 - maximum
-move_delay = 2
+version = "0.3-dev-alpha"
+main_loop_delay = 1
+speed = 60  # 1 - maximum
+auto_shift = 6
+delayed_auto_shift = 16
 flat = False
 grid = True
 
 # window
 win_h = 500
-win_w = 300
+win_w = 400
+game_h = 500
+game_w = 300
+
 scale = 1.5
 cell_size = 20
 
