@@ -15,6 +15,7 @@ class GamepadController:
     def get_hat(self):
         if self.enabled:
             return self.joystick.get_hat(0)
+        return 0, 0
 
     def is_pause_pressed(self):
         if self.enabled:
