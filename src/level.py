@@ -1,5 +1,5 @@
 import cube
-import utils.settings as s
+import settings.settings as s
 
 cubes = []
 score = 0
@@ -23,7 +23,7 @@ def draw():
 def check_line():
     places = {}
     for i in cubes:
-        if i.tag == "block":
+        if i.tag == "Block":
             if i.position[1] in places.keys():
                 places[i.position[1]] += 1
             else:
@@ -46,13 +46,13 @@ def clear_lines():
     if not to_pop:
         return
     for i in cubes:
-        if i.tag == "block" and i.position[1] in to_pop:
+        if i.tag == "Block" and i.position[1] in to_pop:
             to_remove.append(i)
     for i in to_remove:
         remove(i)
     for i in sorted(to_pop):
         for j in cubes:
-            if j.tag == "block" and j.position[1] < i:
+            if j.tag == "Block" and j.position[1] < i:
                 x = j.position[0]
                 y = j.position[1]
                 j.position = (x, y+1)

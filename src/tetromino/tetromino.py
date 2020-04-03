@@ -1,13 +1,28 @@
 import level
 import shade
+from cube import Cube
 
 
 class Tetromino:
 
     def __init__(self):
         self.body = []
+        self.pos = (6, 1)
+        self.state = 0
+        self.one = Cube(tag="Block")
+        self.two = Cube(tag="Block")
+        self.three = Cube(tag="Block")
+        self.four = Cube(tag="Block")
+        self.body.append(self.one)
+        self.body.append(self.two)
+        self.body.append(self.three)
+        self.body.append(self.four)
 
     def move_down(self):
+        """
+
+        :return:  1 if landed, 2 if moved
+        """
         for i in self.body:
             x = i.position[0]
             y = i.position[1] + 1
@@ -20,22 +35,33 @@ class Tetromino:
             y = i.position[1]
             i.position = x, y + 1
         self.pos = self.pos[0], self.pos[1] + 1
+        return 2
 
     def move(self, direct):
+        """
+
+        :param direct: 1 if move right, -1 if move left
+        :return: 0 if can't move, 1 if moved
+        """
         for i in self.body:
             x = i.position[0]
             x += direct
             y = i.position[1]
             for j in level.cubes:
                 if j.position == (x, y):
-                    return
+                    return 0
         for i in self.body:
             x = i.position[0]
             y = i.position[1]
             i.position = x + direct, y
         self.pos = self.pos[0] + direct, self.pos[1]
+        return 1
 
     def try_rotation(self):
+        """
+
+        :return: 0 if can't rotate, 1 if rotated
+        """
         self.rotate()
         shade.shade.rotate()
         for i in level.cubes:
@@ -43,7 +69,8 @@ class Tetromino:
                 if i.position == j.position:
                     self.rotate_back()
                     shade.shade.rotate_back()
-                    return
+                    return 0
+        return 1
 
     def drop(self):
         while self.move_down() != 1:

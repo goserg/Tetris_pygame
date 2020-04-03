@@ -1,4 +1,4 @@
-import utils.settings as s
+import settings.settings as s
 import utils.controller as controller
 from utils.window_manager import window
 from grid import Grid
@@ -73,33 +73,40 @@ while run:
 
     if not pause:
         if controller.just_pressed["Left"]:
-            player.move(-1)
+            if player.move(-1) == 1:
+                to_draw = True
             move_timer = s.delayed_auto_shift
         elif controller.pressed["Left"] and move_timer < 0:
-            player.move(-1)
+            if player.move(-1) == 1:
+                to_draw = True
             move_timer = s.auto_shift
         if controller.just_pressed["Right"]:
-            player.move(1)
+            if player.move(1) == 1:
+                to_draw = True
             move_timer = s.delayed_auto_shift
         elif controller.pressed["Right"] and move_timer < 0:
-            player.move(1)
+            if player.move(1) == 1:
+                to_draw = True
             move_timer = s.auto_shift
 
         if controller.just_pressed["Rotate"]:
-            player.try_rotation()
+            if player.try_rotation():
+                to_draw = True
+                print("rotated")
 
         if (controller.just_pressed["Down"] or (controller.pressed["Down"] and not controller.down_lock))\
                 or fall_timer > s.speed:
             controller.down_lock = False
             fall_timer = 0
-            if player.move_down():
+            if player.move_down() == 1:
                 new_player()
                 controller.down_lock = True
+            to_draw = True
         if controller.just_pressed["Drop"]:
             fall_timer = 0
             player.drop()
             new_player()
-        to_draw = True
+            to_draw = True
 
     if player is None:
         level.cubes.clear()

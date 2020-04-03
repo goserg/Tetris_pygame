@@ -1,5 +1,5 @@
 from utils.window_manager import window
-import utils.settings as s
+import settings.settings as s
 import pygame
 
 

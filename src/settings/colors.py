@@ -1,24 +1,3 @@
-# game
-name = "Tetris"
-version = "0.3-dev-alpha"
-fps_cap = 60
-speed = 48  # 1 - maximum
-auto_shift = 6
-delayed_auto_shift = 16
-flat = True
-grid = False
-
-# window
-win_h = 500
-win_w = 400
-game_h = 500
-game_w = 300
-
-scale = 1.5
-cell_size = 20
-
-# colors
-grid_color = (50, 50, 50)
 standard_color = {"Background": (0, 0, 0),
                   "TypeI": (0, 240, 240),
                   "TypeJ": (0, 0, 240),
@@ -78,5 +57,3 @@ palette_4 = {"Background": (0, 0, 0),
              "Shade": (20, 20, 20),
              "Border": (102, 102, 102),
              "Grid": (20, 20, 20)}
-
-colors = palette_3
