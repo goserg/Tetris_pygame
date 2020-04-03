@@ -92,7 +92,6 @@ while run:
         if controller.just_pressed["Rotate"]:
             if player.try_rotation():
                 to_draw = True
-                print("rotated")
 
         if (controller.just_pressed["Down"] or (controller.pressed["Down"] and not controller.down_lock))\
                 or fall_timer > s.speed:

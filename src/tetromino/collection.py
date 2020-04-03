@@ -138,14 +138,8 @@ class TypeO(Tetromino):
         self.three.position = (x + 1, y)
         self.four.position = (x + 1, y + 1)
 
-    def set_1_rotation(self):
-        self.set_0_rotation()
-
-    def set_2_rotation(self):
-        self.set_0_rotation()
-
-    def set_3_rotation(self):
-        self.set_0_rotation()
+    def try_rotation(self):
+        return 0
 
 
 class TypeS(Tetromino):
