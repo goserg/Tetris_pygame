@@ -5,7 +5,7 @@ import level
 
 class Border:
     def __init__(self):
-        self.color = s.border_color
+        self.color = s.colors["Border"]
         self.generate_border()
 
     def generate_border(self):

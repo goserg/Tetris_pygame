@@ -2,25 +2,19 @@ import utils.settings as s
 from utils.window_manager import window
 import pygame
 
-# TODO change colors calculation
+
+def color_darker(i, percent):
+    r = i[0] * percent
+    g = i[1] * percent
+    b = i[2] * percent
+    return r, g, b
 
 
-def color_bottom(i):
-    return int(i * 0.5)
-
-
-def color_side(i):
-    return int(i * 0.9)
-
-
-def color_top(i):
-    if i == 0:
-        return 179
-    elif i == 240:
-        return 251
-    elif i == 160:
-        return 227
-    return i
+def color_brighten(i, percent):
+    r = i[0] + (256-i[0]) * percent
+    g = i[1] + (256-i[1]) * percent
+    b = i[2] + (256-i[2]) * percent
+    return r, g, b
 
 
 class Cube:
@@ -34,7 +28,7 @@ class Cube:
         x = self.position[0] * s.cell_size * s.scale
         y = self.position[1] * s.cell_size * s.scale
         size = s.cell_size * s.scale
-        pygame.draw.rect(window, (20, 20, 20), (x, y, size, size))
+        pygame.draw.rect(window, s.colors["Shade"], (x, y, size, size))
 
     def draw(self):
         x = self.position[0] * s.cell_size * s.scale
@@ -43,17 +37,17 @@ class Cube:
         pygame.draw.rect(window, self.color, (x, y, size, size))
 
         if not s.flat:
-            top_color = (color_top(self.color[0]), color_top(self.color[1]), color_top(self.color[2]))
+            top_color = (color_brighten(self.color, 0.7))
             pygame.draw.polygon(window, top_color, ((x, y),
                                                     (x + size, y),
                                                     (x + size * 7 / 8, y + size / 8),
                                                     (x + size / 8, y + size / 8)))
-            bottom_color = (color_bottom(self.color[0]), color_bottom(self.color[1]), color_bottom(self.color[2]))
+            bottom_color = (color_darker(self.color, 0.6))
             pygame.draw.polygon(window, bottom_color, ((x, y + size),
                                                        (x + size, y + size),
                                                        (x + size * 7 / 8, y + size * 7 / 8),
                                                        (x + size / 8, y + size * 7 / 8)))
-            side_color = (color_side(self.color[0]), color_side(self.color[1]), color_side(self.color[2]))
+            side_color = (color_darker(self.color, 0.9))
             pygame.draw.polygon(window, side_color, ((x, y),
                                                      (x, y + size),
                                                      (x + size / 8, y + size * 7 / 8),
@@ -62,3 +56,8 @@ class Cube:
                                                      (x + size, y + size),
                                                      (x + size * 7 / 8, y + size * 7 / 8),
                                                      (x + size * 7 / 8, y + size / 8)))
+        else:
+            pygame.draw.lines(window, s.colors["Grid"], True, [(x, y),
+                                                               (x + size, y),
+                                                               (x + size, y + size),
+                                                               (x, y + size)])

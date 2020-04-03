@@ -34,9 +34,11 @@ new_player()
 controller.gamepad = GamepadController()
 controller.keys = pygame.key.get_pressed()
 
+clock = pygame.time.Clock()
+
 
 def draw():
-    window.fill((0, 0, 0))
+    window.fill(s.colors["Background"])
 
     shade.draw()
     player.draw()
@@ -55,8 +57,6 @@ pause = False
 fall_timer = 0
 move_timer = 0
 while run:
-    pygame.time.delay(s.main_loop_delay)
-
     controller.get_keys()
 
     for event in pygame.event.get():
@@ -110,6 +110,8 @@ while run:
         print("Game over! \nScore:", level.score, "\npress Start to play")
         pause = True
         level.score = 0
+        level.lines_cleared = 0
+        s.speed = 48
 
     if player:
         shade.update_pos(player)
@@ -121,3 +123,6 @@ while run:
     move_timer -= 1
     if controller.just_pressed["Start"]:
         print("Start")
+    clock.tick(s.fps_cap)
+
+pygame.quit()

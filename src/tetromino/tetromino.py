@@ -6,8 +6,6 @@ class Tetromino:
 
     def __init__(self):
         self.body = []
-        self.pos = (7, 5)
-        self.state = 0
 
     def move_down(self):
         for i in self.body:

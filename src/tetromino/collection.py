@@ -1,23 +1,23 @@
 from cube import Cube
 from tetromino.tetromino import Tetromino
+import utils.settings as s
 
 
 class TypeI(Tetromino):
     def __init__(self):
         super().__init__()
-        self.color = (0, 240, 240)
+        self.color = s.colors["TypeI"]
         self.pos = (5, 1)
         self.one = Cube(self.pos, self.color, "block")
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
         self.set_1_rotation()
+        self.state = 1
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
         self.body.append(self.four)
-
-        self.state = 1
 
     def set_0_rotation(self):
         x = self.pos[0]
@@ -55,13 +55,14 @@ class TypeI(Tetromino):
 class TypeJ(Tetromino):
     def __init__(self):
         super().__init__()
-        self.color = (0, 0, 240)
+        self.color = s.colors["TypeJ"]
         self.pos = (6, 1)
         self.one = Cube(self.pos, self.color, "block")
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
         self.set_0_rotation()
+        self.state = 0
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
@@ -103,13 +104,14 @@ class TypeJ(Tetromino):
 class TypeL(Tetromino):
     def __init__(self):
         super().__init__()
-        self.color = (240, 160, 0)
+        self.color = s.colors["TypeL"]
         self.pos = (6, 1)
         self.one = Cube(self.pos, self.color, "block")
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
         self.set_0_rotation()
+        self.state = 0
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
@@ -151,13 +153,14 @@ class TypeL(Tetromino):
 class TypeO(Tetromino):
     def __init__(self):
         super().__init__()
-        self.color = (240, 240, 0)
+        self.color = s.colors["TypeO"]
         self.pos = (6, 1)
         self.one = Cube(self.pos, self.color, "block")
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
         self.set_0_rotation()
+        self.state = 0
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
@@ -184,18 +187,18 @@ class TypeO(Tetromino):
 class TypeS(Tetromino):
     def __init__(self):
         super().__init__()
-        self.color = (0, 240, 0)
+        self.color = s.colors["TypeS"]
         self.pos = (6, 1)
         self.one = Cube(self.pos, self.color, "block")
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
         self.set_0_rotation()
+        self.state = 0
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
         self.body.append(self.four)
-        self.state = 0
 
     def set_0_rotation(self):
         x = self.pos[0]
@@ -233,13 +236,14 @@ class TypeS(Tetromino):
 class TypeT(Tetromino):
     def __init__(self):
         super().__init__()
-        self.color = (160, 0, 240)
+        self.color = s.colors["TypeT"]
         self.pos = (6, 1)
         self.one = Cube(self.pos, self.color, "block")
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
         self.set_0_rotation()
+        self.state = 0
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
@@ -281,13 +285,14 @@ class TypeT(Tetromino):
 class TypeZ(Tetromino):
     def __init__(self):
         super().__init__()
-        self.color = (240, 0, 0)
+        self.color = s.colors["TypeZ"]
         self.pos = (6, 1)
         self.one = Cube(self.pos, self.color, "block")
         self.two = Cube(self.pos, self.color, "block")
         self.three = Cube(self.pos, self.color, "block")
         self.four = Cube(self.pos, self.color, "block")
         self.set_0_rotation()
+        self.state = 0
         self.body.append(self.one)
         self.body.append(self.two)
         self.body.append(self.three)
