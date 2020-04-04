@@ -44,7 +44,7 @@ palette_3 = {"Background": (0, 0, 0),
              "TypeZ": (229, 196, 148),
              "Shade": (20, 20, 20),
              "Border": (179, 179, 179),
-             "Grid": (0, 0, 0)}
+             "Grid": (20, 20, 20)}
 
 palette_4 = {"Background": (0, 0, 0),
              "TypeI": (27, 158, 119),

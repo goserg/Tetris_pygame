@@ -101,7 +101,7 @@ while run:
                 new_player()
                 controller.down_lock = True
             to_draw = True
-        if controller.just_pressed["Drop"]:
+        if s.drop_enabled and controller.just_pressed["Drop"]:
             fall_timer = 0
             player.drop()
             new_player()

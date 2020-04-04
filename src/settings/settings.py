@@ -21,3 +21,6 @@ cell_size = 20
 
 # colors
 colors = colors.palette_3
+
+# controls
+drop_enabled = False  # is Hard Drop is used
