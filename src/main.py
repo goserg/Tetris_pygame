@@ -11,18 +11,20 @@ import next_indicator
 from ui.ui import ui
 import stats.score
 import stats.level
+from utils.fsm import GameState
 
 pygame.init()
 
 grid = Grid()
 border = Border()
 player = type(next_indicator.next_one)()
+state = GameState.PAUSE
 
 
 def game_over():
     global border
-    global gameover
-    gameover = False
+    global state
+    state = GameState.PAUSE
     well.cubes.clear()
     border = Border()
     print("Game over! \nScore:", stats.score.score, "\npress Start to play")
@@ -43,14 +45,12 @@ def new_game():
 
 def new_player():
     global player
-    global gameover
-    global pause
+    global state
     player = type(next_indicator.next_one)()
     for i in player.body:
         for j in well.cubes:
             if i.position == j.position:
-                gameover = True
-                pause = True
+                state = GameState.GAME_OVER
                 return
     shade.shade = type(player)()
     shade.update_pos(player)
@@ -64,6 +64,7 @@ clock = pygame.time.Clock()
 
 
 def draw():
+    global state
     window.fill(s.colors["Background"])
 
     shade.draw()
@@ -74,15 +75,13 @@ def draw():
     if s.grid:
         grid.draw() 
 
-    ui.draw()
+    ui.draw(state)
     pygame.display.update()
 
 
 run = True
 to_draw = True
 new_game()
-pause = False
-gameover = False
 while run:
     controller.get_keys()
 
@@ -91,20 +90,20 @@ while run:
             run = False
 
     if controller.just_pressed["Start"]:
-        if gameover:
-            pause = False
+        to_draw = True
+        if state == GameState.GAME_OVER:
+            next_indicator.change()
             game_over()
             new_game()
-            to_draw = True
             continue
-        if not pause:
-            pause = True
+        if state == GameState.PLAY:
+            state = GameState.PAUSE
         else:
-            pause = False
+            state = GameState.PLAY
             fall_timer = 0
             move_timer = 0
 
-    if not pause:
+    if state == GameState.PLAY:
         if controller.just_pressed["Left"]:
             if player.move(-1) == 1:
                 to_draw = True

@@ -1,5 +1,7 @@
 from ui.text import Text
 from ui.ui_block import UIBlock
+import settings.settings as s
+from utils.fsm import GameState
 
 
 class UI:
@@ -16,11 +18,22 @@ class UI:
         self.level_block.add(Text("level", self.text_color, 20, 0, 0))
         self.level_block.add(Text("0", self.text_color, 20, 0, 0))
 
-    def draw(self):
+        self.game_over = Text("GAME OVER", (255, 255, 255), 30,
+                              s.game_w // 2,
+                              s.game_h // 2)
+        self.pause = Text("press Start to play", (255, 255, 255), 20,
+                          s.game_w // 2,
+                          s.game_h // 2)
+
+    def draw(self, state):
         self.next_text.draw()
         self.lines_cleared_block.draw()
         self.score_block.draw()
         self.level_block.draw()
+        if state == GameState.GAME_OVER:
+            self.game_over.draw()
+        elif state == GameState.PAUSE:
+            self.pause.draw()
 
 
 ui = UI()
