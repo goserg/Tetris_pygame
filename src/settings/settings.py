@@ -2,7 +2,7 @@ import settings.colors as colors
 
 # game
 name = "Tetris"
-version = "0.3-dev-alpha"
+version = "0.4-dev-alpha"
 fps_cap = 60
 speed = 48  # 1 - maximum
 auto_shift = 6

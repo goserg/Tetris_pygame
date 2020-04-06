@@ -1,7 +1,7 @@
 # Tetris
 Python & pygame
 
-![v0.3 screenshot](img/0.3-alpha.png?raw=true "v0.3 screenshot")  
+![v0.4 screenshot](img/0.4-alpha.png?raw=true "v0.4 screenshot")  
 
 
 supporting XBOX 360 For Windows (Controller)  
