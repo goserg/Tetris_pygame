@@ -1,8 +1,9 @@
 import cube
 import settings.settings as s
+from ui.ui import ui
+import stats.score
 
 cubes = []
-score = 0
 lines_cleared = 0
 
 
@@ -30,17 +31,15 @@ def check_line():
                 places[i.position[1]] = 1
     to_pop = []
     for key, value in places.items():
-        if value == 13:
+        if value == 10:
             to_pop.append(key)
     return to_pop
 
 
 def clear_lines():
     to_pop = check_line()
-    global score
     global lines_cleared
-    score += len(to_pop)**2
-    lines_cleared += len(to_pop)
+    stats.score.add(len(to_pop))
     change_speed(lines_cleared)
     to_remove = []
     if not to_pop:

@@ -1,4 +1,4 @@
-import level
+import well
 import shade
 from cube import Cube
 
@@ -7,7 +7,7 @@ class Tetromino:
 
     def __init__(self):
         self.body = []
-        self.pos = (6, 1)
+        self.pos = (5, 1)
         self.state = 0
         self.one = Cube(tag="Block")
         self.two = Cube(tag="Block")
@@ -26,7 +26,7 @@ class Tetromino:
         for i in self.body:
             x = i.position[0]
             y = i.position[1] + 1
-            for j in level.cubes:
+            for j in well.cubes:
                 if j.position == (x, y):
                     self.transfer_to_level()
                     return 1
@@ -47,7 +47,7 @@ class Tetromino:
             x = i.position[0]
             x += direct
             y = i.position[1]
-            for j in level.cubes:
+            for j in well.cubes:
                 if j.position == (x, y):
                     return 0
         for i in self.body:
@@ -64,7 +64,7 @@ class Tetromino:
         """
         self.rotate()
         shade.shade.rotate()
-        for i in level.cubes:
+        for i in well.cubes:
             for j in self.body:
                 if i.position == j.position:
                     self.rotate_back()
@@ -78,8 +78,8 @@ class Tetromino:
 
     def transfer_to_level(self):
         for cube in self.body:
-            level.add(cube)
-        level.clear_lines()
+            well.add(cube)
+        well.clear_lines()
         self.__init__()
 
     def rotate(self):

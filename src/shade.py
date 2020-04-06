@@ -1,4 +1,4 @@
-import level
+import well
 
 
 shade = None
@@ -25,7 +25,7 @@ def move_down():
         y = i.position[1] + 1
         if y > 23:
             return 1
-        for j in level.cubes:
+        for j in well.cubes:
             if j.position == (x, y):
                 return 1
     for i in shade.body:

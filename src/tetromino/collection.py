@@ -4,7 +4,7 @@ from tetromino.tetromino import Tetromino
 class TypeI(Tetromino):
     def __init__(self):
         super().__init__()
-        self.pos = (5, 1)
+        self.pos = (4, 1)
         self.set_1_rotation()
         self.state = 1
         for i in self.body:

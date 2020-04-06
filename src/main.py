@@ -3,11 +3,14 @@ import utils.controller as controller
 from utils.window_manager import window
 from grid import Grid
 from border import Border
-import level
+import well
 import pygame
 from utils.gamepad_controller import GamepadController
 import shade
 import next_indicator
+from ui.ui import ui
+import stats.score
+import stats.level
 
 pygame.init()
 
@@ -18,32 +21,36 @@ player = type(next_indicator.next_one)()
 
 def game_over():
     global border
-    level.cubes.clear()
+    global gameover
+    gameover = False
+    well.cubes.clear()
     border = Border()
-    print("Game over! \nScore:", level.score, "\npress Start to play")
-    level.score = 0
-    level.lines_cleared = 0
+    print("Game over! \nScore:", stats.score.score, "\npress Start to play")
+    stats.score.clear()
+    well.lines_cleared = 0
+    ui.lines_cleared_block.lst[1].text = "0"
+    ui.score_block.lst[1].text = "0"
     s.speed = 48
 
 
 def new_game():
     global move_timer
     global fall_timer
-    global pause
     new_player()
     move_timer = 0
     fall_timer = 0
-    pause = True
 
 
 def new_player():
     global player
+    global gameover
+    global pause
     player = type(next_indicator.next_one)()
     for i in player.body:
-        for j in level.cubes:
+        for j in well.cubes:
             if i.position == j.position:
-                game_over()
-                new_game()
+                gameover = True
+                pause = True
                 return
     shade.shade = type(player)()
     shade.update_pos(player)
@@ -63,10 +70,11 @@ def draw():
     player.draw()
     next_indicator.next_one.draw()
 
-    level.draw()
+    well.draw()
     if s.grid:
         grid.draw() 
 
+    ui.draw()
     pygame.display.update()
 
 
@@ -74,6 +82,7 @@ run = True
 to_draw = True
 new_game()
 pause = False
+gameover = False
 while run:
     controller.get_keys()
 
@@ -82,6 +91,12 @@ while run:
             run = False
 
     if controller.just_pressed["Start"]:
+        if gameover:
+            pause = False
+            game_over()
+            new_game()
+            to_draw = True
+            continue
         if not pause:
             pause = True
         else:

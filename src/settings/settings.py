@@ -11,12 +11,12 @@ flat = True
 grid = False
 
 # window
-win_h = 500
-win_w = 400
-game_h = 500
-game_w = 300
+win_h = 440
+win_w = 340
+game_h = 440
+game_w = 240
 
-scale = 1.5
+scale = 2
 cell_size = 20
 
 # colors
@@ -24,3 +24,6 @@ colors = colors.palette_3
 
 # controls
 drop_enabled = False  # is Hard Drop is used
+
+# font
+font = 'freesansbold.ttf'
