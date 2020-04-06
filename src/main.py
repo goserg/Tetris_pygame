@@ -16,20 +16,39 @@ border = Border()
 player = type(next_indicator.next_one)()
 
 
+def game_over():
+    global border
+    level.cubes.clear()
+    border = Border()
+    print("Game over! \nScore:", level.score, "\npress Start to play")
+    level.score = 0
+    level.lines_cleared = 0
+    s.speed = 48
+
+
+def new_game():
+    global move_timer
+    global fall_timer
+    global pause
+    new_player()
+    move_timer = 0
+    fall_timer = 0
+    pause = True
+
+
 def new_player():
     global player
     player = type(next_indicator.next_one)()
     for i in player.body:
         for j in level.cubes:
             if i.position == j.position:
-                player = None  # TODO: looks ugy
+                game_over()
+                new_game()
                 return
     shade.shade = type(player)()
     shade.update_pos(player)
     next_indicator.change()
 
-
-new_player()
 
 controller.gamepad = GamepadController()
 controller.keys = pygame.key.get_pressed()
@@ -53,9 +72,8 @@ def draw():
 
 run = True
 to_draw = True
+new_game()
 pause = False
-fall_timer = 0
-move_timer = 0
 while run:
     controller.get_keys()
 
@@ -107,18 +125,6 @@ while run:
             new_player()
             to_draw = True
 
-    if player is None:
-        level.cubes.clear()
-        new_player()
-        border = Border()
-        move_timer = 0
-        fall_timer = 0
-        print("Game over! \nScore:", level.score, "\npress Start to play")
-        pause = True
-        level.score = 0
-        level.lines_cleared = 0
-        s.speed = 48
-
     if player:
         shade.update_pos(player)
 
@@ -127,8 +133,6 @@ while run:
         to_draw = False
     fall_timer += 1
     move_timer -= 1
-    if controller.just_pressed["Start"]:
-        print("Start")
     clock.tick(s.fps_cap)
 
 pygame.quit()

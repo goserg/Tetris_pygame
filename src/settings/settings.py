@@ -7,7 +7,7 @@ fps_cap = 60
 speed = 48  # 1 - maximum
 auto_shift = 6
 delayed_auto_shift = 16
-flat = False
+flat = True
 grid = False
 
 # window
