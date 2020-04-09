@@ -7,7 +7,7 @@ class Tetromino:
 
     def __init__(self):
         self.body = []
-        self.pos = (5, 1)
+        self.pos = (5, 0)
         self.state = 0
         self.one = Cube(tag="Block")
         self.two = Cube(tag="Block")

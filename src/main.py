@@ -12,22 +12,25 @@ from ui.ui import ui
 import stats.score
 import stats.level
 from utils.fsm import GameState
+from ui.menu import Menu
+from stats.high_score import table as score_list
+import datetime
 
 pygame.init()
 
 grid = Grid()
 border = Border()
 player = type(next_indicator.next_one)()
-state = GameState.PAUSE
+state = GameState.MENU
+
+menu = Menu()
 
 
 def game_over():
     global border
     global state
-    state = GameState.PAUSE
     well.cubes.clear()
     border = Border()
-    print("Game over! \nScore:", stats.score.score, "\npress Start to play")
     stats.score.clear()
     well.lines_cleared = 0
     ui.lines_cleared_block.lst[1].text = "0"
@@ -50,7 +53,10 @@ def new_player():
     for i in player.body:
         for j in well.cubes:
             if i.position == j.position:
-                state = GameState.GAME_OVER
+                if score_list.is_enough(stats.score.score):
+                    state = GameState.GAME_OVER_RECORD
+                else:
+                    state = GameState.GAME_OVER
                 return
     shade.shade = type(player)()
     shade.update_pos(player)
@@ -66,16 +72,18 @@ clock = pygame.time.Clock()
 def draw():
     global state
     window.fill(s.colors["Background"])
-
-    shade.draw()
-    player.draw()
-    next_indicator.next_one.draw()
-
-    well.draw()
+    if state == GameState.PLAY or state == GameState.PAUSE or \
+            state == GameState.GAME_OVER_RECORD or state == GameState.GAME_OVER:
+        shade.draw()
+        player.draw()
+        next_indicator.next_one.draw()
+        well.draw()
+        ui.draw(state)
+    if state == GameState.MENU:
+        menu.draw()
     if s.grid:
         grid.draw() 
 
-    ui.draw(state)
     pygame.display.update()
 
 
@@ -92,16 +100,45 @@ while run:
     if controller.just_pressed["Start"]:
         to_draw = True
         if state == GameState.GAME_OVER:
+            state = GameState.MENU
             next_indicator.change()
             game_over()
             new_game()
             continue
-        if state == GameState.PLAY:
+        elif state == GameState.GAME_OVER_RECORD:
+            if score_list.is_enough(stats.score.score):
+                if score_list.add_score(ui.score_plate.get_name(), stats.score.score) == 1:
+                    menu.update_score()
+            state = GameState.MENU
+            next_indicator.change()
+            game_over()
+            new_game()
+            continue
+        elif state == GameState.PLAY:
             state = GameState.PAUSE
-        else:
+        elif state == GameState.PAUSE:
             state = GameState.PLAY
             fall_timer = 0
             move_timer = 0
+    if state == GameState.GAME_OVER_RECORD:
+        if ui.score_plate.move(controller.get_direction()) != 0:
+            to_draw = True
+        if controller.just_pressed["Rotate"]:
+            ui.score_plate.add_letter()
+            to_draw = True
+        elif controller.just_pressed["Clear"]:
+            ui.score_plate.clear_name()
+            to_draw = True
+    elif state == GameState.MENU:
+        if menu.change_state():
+            to_draw = True
+        if controller.just_pressed["Start"]:
+            if menu.btn == menu.ButtonPos.START:
+                state = GameState.PLAY
+                fall_timer = 0
+                move_timer = 0
+            elif menu.btn == menu.ButtonPos.QUIT:
+                run = False
 
     if state == GameState.PLAY:
         if controller.just_pressed["Left"]:

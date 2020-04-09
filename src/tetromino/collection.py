@@ -4,9 +4,9 @@ from tetromino.tetromino import Tetromino
 class TypeI(Tetromino):
     def __init__(self):
         super().__init__()
-        self.pos = (4, 1)
-        self.set_1_rotation()
-        self.state = 1
+        self.pos = (4, -1)
+        self.set_0_rotation()
+        self.state = 0
         for i in self.body:
             i.color_tag = "TypeI"
 
@@ -46,6 +46,7 @@ class TypeI(Tetromino):
 class TypeJ(Tetromino):
     def __init__(self):
         super().__init__()
+        self.pos = (5, -1)
         self.set_0_rotation()
         for i in self.body:
             i.color_tag = "TypeJ"
@@ -53,28 +54,12 @@ class TypeJ(Tetromino):
     def set_0_rotation(self):
         x = self.pos[0]
         y = self.pos[1]
-        self.one.position = (x, y)
-        self.two.position = (x, y + 1)
-        self.three.position = (x + 1, y + 1)
-        self.four.position = (x + 2, y + 1)
-
-    def set_1_rotation(self):
-        x = self.pos[0]
-        y = self.pos[1]
-        self.one.position = (x + 1, y)
-        self.two.position = (x + 2, y)
-        self.three.position = (x + 1, y + 1)
-        self.four.position = (x + 1, y + 2)
-
-    def set_2_rotation(self):
-        x = self.pos[0]
-        y = self.pos[1]
         self.one.position = (x, y + 1)
         self.two.position = (x + 1, y + 1)
         self.three.position = (x + 2, y + 1)
         self.four.position = (x + 2, y + 2)
 
-    def set_3_rotation(self):
+    def set_1_rotation(self):
         x = self.pos[0]
         y = self.pos[1]
         self.one.position = (x + 1, y)
@@ -82,10 +67,27 @@ class TypeJ(Tetromino):
         self.three.position = (x, y + 2)
         self.four.position = (x + 1, y + 2)
 
+    def set_2_rotation(self):
+        x = self.pos[0]
+        y = self.pos[1]
+        self.one.position = (x, y)
+        self.two.position = (x, y + 1)
+        self.three.position = (x + 1, y + 1)
+        self.four.position = (x + 2, y + 1)
+
+    def set_3_rotation(self):
+        x = self.pos[0]
+        y = self.pos[1]
+        self.one.position = (x + 1, y)
+        self.two.position = (x + 2, y)
+        self.three.position = (x + 1, y + 1)
+        self.four.position = (x + 1, y + 2)
+
 
 class TypeL(Tetromino):
     def __init__(self):
         super().__init__()
+        self.pos = (5, -1)
         self.set_0_rotation()
         for i in self.body:
             i.color_tag = "TypeL"
@@ -93,34 +95,34 @@ class TypeL(Tetromino):
     def set_0_rotation(self):
         x = self.pos[0]
         y = self.pos[1]
-        self.one.position = (x + 2, y)
-        self.two.position = (x, y + 1)
-        self.three.position = (x + 1, y + 1)
-        self.four.position = (x + 2, y + 1)
-
-    def set_1_rotation(self):
-        x = self.pos[0]
-        y = self.pos[1]
-        self.one.position = (x + 1, y)
-        self.two.position = (x + 1, y + 1)
-        self.three.position = (x + 1, y + 2)
-        self.four.position = (x + 2, y + 2)
-
-    def set_2_rotation(self):
-        x = self.pos[0]
-        y = self.pos[1]
         self.one.position = (x, y + 1)
         self.two.position = (x + 1, y + 1)
         self.three.position = (x + 2, y + 1)
         self.four.position = (x, y + 2)
 
-    def set_3_rotation(self):
+    def set_1_rotation(self):
         x = self.pos[0]
         y = self.pos[1]
         self.one.position = (x, y)
         self.two.position = (x + 1, y)
         self.three.position = (x + 1, y + 1)
         self.four.position = (x + 1, y + 2)
+
+    def set_2_rotation(self):
+        x = self.pos[0]
+        y = self.pos[1]
+        self.one.position = (x + 2, y)
+        self.two.position = (x, y + 1)
+        self.three.position = (x + 1, y + 1)
+        self.four.position = (x + 2, y + 1)
+
+    def set_3_rotation(self):
+        x = self.pos[0]
+        y = self.pos[1]
+        self.one.position = (x + 1, y)
+        self.two.position = (x + 1, y + 1)
+        self.three.position = (x + 1, y + 2)
+        self.four.position = (x + 2, y + 2)
 
 
 class TypeO(Tetromino):
@@ -185,6 +187,7 @@ class TypeS(Tetromino):
 class TypeT(Tetromino):
     def __init__(self):
         super().__init__()
+        self.pos = (5, -1)
         self.set_0_rotation()
         for i in self.body:
             i.color_tag = "TypeT"
@@ -192,33 +195,33 @@ class TypeT(Tetromino):
     def set_0_rotation(self):
         x = self.pos[0]
         y = self.pos[1]
-        self.one.position = (x + 1, y)
-        self.two.position = (x, y + 1)
-        self.three.position = (x + 1, y + 1)
-        self.four.position = (x + 2, y + 1)
-
-    def set_1_rotation(self):
-        x = self.pos[0]
-        y = self.pos[1]
-        self.one.position = (x + 1, y)
-        self.two.position = (x + 1, y + 1)
-        self.three.position = (x + 2, y + 1)
-        self.four.position = (x + 1, y + 2)
-
-    def set_2_rotation(self):
-        x = self.pos[0]
-        y = self.pos[1]
         self.one.position = (x, y + 1)
         self.two.position = (x + 1, y + 1)
         self.three.position = (x + 2, y + 1)
         self.four.position = (x + 1, y + 2)
 
-    def set_3_rotation(self):
+    def set_1_rotation(self):
         x = self.pos[0]
         y = self.pos[1]
         self.one.position = (x + 1, y)
         self.two.position = (x, y + 1)
         self.three.position = (x + 1, y + 1)
+        self.four.position = (x + 1, y + 2)
+
+    def set_2_rotation(self):
+        x = self.pos[0]
+        y = self.pos[1]
+        self.one.position = (x + 1, y)
+        self.two.position = (x, y + 1)
+        self.three.position = (x + 1, y + 1)
+        self.four.position = (x + 2, y + 1)
+
+    def set_3_rotation(self):
+        x = self.pos[0]
+        y = self.pos[1]
+        self.one.position = (x + 1, y)
+        self.two.position = (x + 1, y + 1)
+        self.three.position = (x + 2, y + 1)
         self.four.position = (x + 1, y + 2)
 
 

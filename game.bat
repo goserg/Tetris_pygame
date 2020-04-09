@@ -1,1 +1,2 @@
-py src\main.py
+cd src
+py main.py

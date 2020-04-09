@@ -5,7 +5,7 @@ from utils.window_manager import window
 
 def display_text(text, color, size, x, y):
     size = int(size * s.scale)
-    font = pygame.font.Font(s.font, size)
+    font = pygame.font.SysFont(s.font, size)
     text_surf = font.render(text, True, color)
     text_rect = text_surf.get_rect()
     text_rect.center = (x * s.scale, y * s.scale)

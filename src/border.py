@@ -12,8 +12,8 @@ class Border:
         cols = s.game_w // s.cell_size
         rows = s.game_h // s.cell_size
         for i in range(0, cols-2):
-            cube = Cube("Wall", (i+1, 0), self.color_tag)
-            well.add(cube)
+            # cube = Cube("Wall", (i+1, 0), self.color_tag)
+            # well.add(cube)
             cube = Cube("Wall", (i+1, rows - 1), self.color_tag)
             well.add(cube)
         for i in range(0, rows):
