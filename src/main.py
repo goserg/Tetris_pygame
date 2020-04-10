@@ -37,14 +37,6 @@ def game_over():
     s.speed = 48
 
 
-def new_game():
-    global move_timer
-    global fall_timer
-    new_player()
-    move_timer = 0
-    fall_timer = 0
-
-
 def new_player():
     global player
     global state
@@ -88,7 +80,7 @@ def draw():
 
 run = True
 to_draw = True
-new_game()
+new_player()
 while run:
     controller.get_keys()
 
@@ -102,7 +94,7 @@ while run:
             state = GameState.MENU
             next_indicator.change()
             game_over()
-            new_game()
+            new_player()
             continue
         elif state == GameState.GAME_OVER_RECORD:
             if score_list.is_enough(stats.score.score):
@@ -111,7 +103,7 @@ while run:
             state = GameState.MENU
             next_indicator.change()
             game_over()
-            new_game()
+            new_player()
             continue
         elif state == GameState.PLAY:
             state = GameState.PAUSE

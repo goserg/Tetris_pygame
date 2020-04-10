@@ -5,7 +5,8 @@ from utils.window_manager import window
 import utils.controller as controller
 import pygame
 
-letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
+MAX_LEN = 15
 
 
 class ScorePlate:
@@ -13,6 +14,7 @@ class ScorePlate:
         self.name = "enter your name"
         self.letter = "A"
         self.buttons = []
+        self.move_timer = 0
         self.plate = pygame.Surface((300 * s.scale, 300 * s.scale))
 
         self.game_over = Text("GAME OVER", (255, 255, 255), 30,
@@ -30,8 +32,16 @@ class ScorePlate:
         self.press_b_btn = Text("B to clear name", (255, 255, 255), 15,
                                 s.win_w // 2,
                                 s.win_h * 3 // 4 + 30)
-        for i, l in enumerate(letters):
-            self.buttons.append(Button(l, l, 5 * s.scale, i * 11 * s.scale + 25, 150, self.plate))
+        x0 = 0
+        y0 = 0
+        for letter in LETTERS:
+            x = x0 * 15 * s.scale + 180
+            y = y0 * 20 * s.scale + 150
+            self.buttons.append(Button(letter, letter, 7 * s.scale, x, y, self.plate))
+            x0 += 1
+            if x0 == 9:
+                x0 = 0
+                y0 += 1
 
     def update(self):
         to_draw = False
@@ -66,25 +76,46 @@ class ScorePlate:
         :param direction: tuple: controls direction
         :return: 0 if not moved else 1
         """
-        if direction[0] == 0:
+        if self.move_timer > 0:
+            self.move_timer -= 1
             return 0
-        index = letters.index(self.letter) + direction[0]
+        if direction == (0, 0):
+            return 0
+        self.move_timer = s.auto_shift
+        index = LETTERS.index(self.letter) + direction[0]
         if index < 0:
-            index = len(letters) - 1
-        if index >= len(letters):
+            index = len(LETTERS) - 1
+        if index >= len(LETTERS):
             index = 0
-        self.letter = letters[index]
+        if direction[1] == 1:
+            if 0 <= index < 8:
+                index += 18
+            else:
+                index -= 9
+        elif direction[1] == -1:
+            if 18 <= index <= 26:
+                index -= 18
+            else:
+                index += 9
+        self.letter = LETTERS[index]
         return 1
 
     def add_letter(self):
-        if self.name == "enter your name":
+        if self.name == "enter your name" and self.letter != " ":
             self.name = self.letter
-        elif len(self.name) < 10:
+        elif len(self.name) < MAX_LEN:
             self.name += self.letter
         self.name_text.text = self.name
 
     def clear_name(self):
-        self.name = "enter your name"
+        if self.name == "enter your name":
+            self.name_text.text = self.name
+            return
+        if len(self.name) == 1:
+            self.name = "enter your name"
+            self.name_text.text = self.name
+            return
+        self.name = self.name[:-1]
         self.name_text.text = self.name
 
     def get_name(self):

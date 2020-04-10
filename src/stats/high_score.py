@@ -1,7 +1,8 @@
 import pickle
 import os.path
 
-_file_name = "../saves/high_scores.ttr"
+_save_dir = "../saves/"
+_file_name = "high_scores.ttr"
 
 
 class _HighScore:
@@ -33,14 +34,14 @@ class _HighScore:
 
 
 def _save_file():
-    with open(_file_name, "wb") as fw:
+    with open(_save_dir+_file_name, "wb") as fw:
         pickle.dump(table, fw)
 
 
-if not os.path.isfile(_file_name):
-    if not os.path.exists("../saves/"):
-        os.makedirs("../saves/")
+if not os.path.isfile(_save_dir+_file_name):
+    if not os.path.exists(_save_dir):
+        os.makedirs(_save_dir)
     table = _HighScore()
 else:
-    with open(_file_name, "rb") as fr:
+    with open(_save_dir+_file_name, "rb") as fr:
         table = pickle.load(fr)
