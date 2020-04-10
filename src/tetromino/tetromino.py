@@ -1,6 +1,8 @@
 import well
 import shade
 from cube import Cube
+import settings.settings as s
+import utils.controller as controller
 
 
 class Tetromino:
@@ -17,6 +19,58 @@ class Tetromino:
         self.body.append(self.two)
         self.body.append(self.three)
         self.body.append(self.four)
+
+        self.move_timer = 0
+        self.fall_timer = 0
+
+    def update(self):
+        """
+
+        :return: 0 if nothing happened
+        :return: 1 if moved
+        :return: 2 if landed
+        """
+        to_draw = 0
+        if controller.just_pressed["Left"]:
+            if self.move(-1) == 1:
+                to_draw = 1
+            self.move_timer = s.delayed_auto_shift
+        elif controller.pressed["Left"] and self.move_timer < 0:
+            if self.move(-1) == 1:
+                to_draw = 1
+            self.move_timer = s.auto_shift
+        if controller.just_pressed["Right"]:
+            if self.move(1) == 1:
+                to_draw = 1
+            self.move_timer = s.delayed_auto_shift
+        elif controller.pressed["Right"] and self.move_timer < 0:
+            if self.move(1) == 1:
+                to_draw = 1
+            self.move_timer = s.auto_shift
+
+        if controller.just_pressed["Rotate"]:
+            if self.try_rotation():
+                to_draw = 1
+
+        if (controller.just_pressed["Down"] or (controller.pressed["Down"] and not controller.down_lock))\
+                or self.fall_timer > s.speed:
+            controller.down_lock = False
+            self.fall_timer = 0
+            if self.move_down() == 1:
+                controller.down_lock = True
+                return 2
+            to_draw = 1
+        if s.drop_enabled and controller.just_pressed["Drop"]:
+            self.fall_timer = 0
+            self.drop()
+            return 2
+        self.move_timer -= 1
+        self.fall_timer += 1
+        return to_draw
+
+    def reset_timers(self):
+        self.move_timer = 0
+        self.fall_timer = 0
 
     def move_down(self):
         """

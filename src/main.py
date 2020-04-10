@@ -14,7 +14,6 @@ import stats.level
 from utils.fsm import GameState
 from ui.menu import Menu
 from stats.high_score import table as score_list
-import datetime
 
 pygame.init()
 
@@ -118,16 +117,10 @@ while run:
             state = GameState.PAUSE
         elif state == GameState.PAUSE:
             state = GameState.PLAY
-            fall_timer = 0
-            move_timer = 0
+            player.reset_timers()
+
     if state == GameState.GAME_OVER_RECORD:
-        if ui.score_plate.move(controller.get_direction()) != 0:
-            to_draw = True
-        if controller.just_pressed["Rotate"]:
-            ui.score_plate.add_letter()
-            to_draw = True
-        elif controller.just_pressed["Clear"]:
-            ui.score_plate.clear_name()
+        if ui.score_plate.update():
             to_draw = True
     elif state == GameState.MENU:
         if menu.change_state():
@@ -135,44 +128,15 @@ while run:
         if controller.just_pressed["Start"]:
             if menu.btn == menu.ButtonPos.START:
                 state = GameState.PLAY
-                fall_timer = 0
-                move_timer = 0
+                player.reset_timers()
             elif menu.btn == menu.ButtonPos.QUIT:
                 run = False
 
     if state == GameState.PLAY:
-        if controller.just_pressed["Left"]:
-            if player.move(-1) == 1:
-                to_draw = True
-            move_timer = s.delayed_auto_shift
-        elif controller.pressed["Left"] and move_timer < 0:
-            if player.move(-1) == 1:
-                to_draw = True
-            move_timer = s.auto_shift
-        if controller.just_pressed["Right"]:
-            if player.move(1) == 1:
-                to_draw = True
-            move_timer = s.delayed_auto_shift
-        elif controller.pressed["Right"] and move_timer < 0:
-            if player.move(1) == 1:
-                to_draw = True
-            move_timer = s.auto_shift
-
-        if controller.just_pressed["Rotate"]:
-            if player.try_rotation():
-                to_draw = True
-
-        if (controller.just_pressed["Down"] or (controller.pressed["Down"] and not controller.down_lock))\
-                or fall_timer > s.speed:
-            controller.down_lock = False
-            fall_timer = 0
-            if player.move_down() == 1:
-                new_player()
-                controller.down_lock = True
+        p_event = player.update()
+        if p_event == 1:  # Player moved
             to_draw = True
-        if s.drop_enabled and controller.just_pressed["Drop"]:
-            fall_timer = 0
-            player.drop()
+        elif p_event == 2:  # Player landed
             new_player()
             to_draw = True
 
@@ -182,8 +146,6 @@ while run:
     if to_draw:
         draw()
         to_draw = False
-    fall_timer += 1
-    move_timer -= 1
     clock.tick(s.fps_cap)
 
 pygame.quit()

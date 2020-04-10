@@ -38,6 +38,8 @@ def _save_file():
 
 
 if not os.path.isfile(_file_name):
+    if not os.path.exists("../saves/"):
+        os.makedirs("../saves/")
     table = _HighScore()
 else:
     with open(_file_name, "rb") as fr:

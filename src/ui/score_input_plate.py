@@ -1,8 +1,8 @@
-from enum import Enum, auto
 from ui.button import Button
 from ui.text import Text
 import settings.settings as s
 from utils.window_manager import window
+import utils.controller as controller
 import pygame
 
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -32,6 +32,18 @@ class ScorePlate:
                                 s.win_h * 3 // 4 + 30)
         for i, l in enumerate(letters):
             self.buttons.append(Button(l, l, 5 * s.scale, i * 11 * s.scale + 25, 150, self.plate))
+
+    def update(self):
+        to_draw = False
+        if self.move(controller.get_direction()) != 0:
+            to_draw = True
+        if controller.just_pressed["Rotate"]:
+            self.add_letter()
+            to_draw = True
+        elif controller.just_pressed["Clear"]:
+            self.clear_name()
+            to_draw = True
+        return to_draw
 
     def draw(self):
         self.plate.fill((50, 50, 50))
