@@ -20,7 +20,7 @@ scale = 2
 cell_size = 20
 
 # colors
-colors = colors.palette_3
+colors = colors.level_1
 
 # controls
 drop_enabled = False  # is Hard Drop is used
