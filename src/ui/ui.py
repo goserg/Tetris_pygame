@@ -1,6 +1,6 @@
 from ui.text import Text
 from ui.ui_block import UIBlock
-from ui.score_input_plate import ScorePlate
+from ui.name_input import NameInput
 from ui.menu import Menu
 import settings.settings as s
 from utils.fsm import GameState
@@ -27,7 +27,7 @@ class UI:
                           s.game_w // 2,
                           s.game_h // 2)
 
-        self.score_plate = ScorePlate()
+        self.score_plate = NameInput()
 
     def draw(self, state):
         self.next_text.draw()

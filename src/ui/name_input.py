@@ -9,7 +9,7 @@ LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
 MAX_LEN = 15
 
 
-class ScorePlate:
+class NameInput:
     def __init__(self):
         self.name = "enter your name"
         self.letter = "A"
@@ -17,7 +17,7 @@ class ScorePlate:
         self.move_timer = 0
         self.plate = pygame.Surface((300 * s.scale, 300 * s.scale))
 
-        self.game_over = Text("GAME OVER", (255, 255, 255), 30,
+        self.game_over = Text("Name change", (255, 255, 255), 30,
                               s.win_w // 2,
                               s.win_h // 4)
         self.name_text = Text(self.name, (255, 255, 255), 30,
@@ -29,7 +29,7 @@ class ScorePlate:
         self.press_start_btn = Text("Start to confirm", (255, 255, 255), 15,
                                     s.win_w // 2,
                                     s.win_h * 3 // 4 + 15)
-        self.press_b_btn = Text("B to clear name", (255, 255, 255), 15,
+        self.press_b_btn = Text("B to clear letter", (255, 255, 255), 15,
                                 s.win_w // 2,
                                 s.win_h * 3 // 4 + 30)
         x0 = 0
@@ -122,3 +122,7 @@ class ScorePlate:
         if self.name == "enter your name":
             return "anonymous"
         return self.name
+
+    def set_name(self, name):
+        self.name = name
+        self.name_text.text = name

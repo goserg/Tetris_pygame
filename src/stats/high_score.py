@@ -8,6 +8,11 @@ _file_name = "high_scores.ttr"
 class _HighScore:
     def __init__(self):
         self.score_list = [["", 0] for _ in range(10)]
+        self.players = ["Player 1", "Player 2", "Player 3", "Player 4"]
+
+    def change_name(self, name, i):
+        self.players[i] = name
+        _save_file()
 
     def add_score(self, name, score):
         """
@@ -36,6 +41,7 @@ class _HighScore:
 def _save_file():
     with open(_save_dir+_file_name, "wb") as fw:
         pickle.dump(table, fw)
+    print("save file changed")
 
 
 if not os.path.isfile(_save_dir+_file_name):

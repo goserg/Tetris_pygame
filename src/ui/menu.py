@@ -13,18 +13,18 @@ class Menu:
         SCORE = auto()
 
     class ButtonPos(Enum):
-        START = auto()
+        PLAY = auto()
         SCORE = auto()
         QUIT = auto()
 
     def __init__(self):
-        self.btn = self.ButtonPos.START
+        self.btn = self.ButtonPos.PLAY
         self.state = self.MenuState.MAIN
         self.main_screen = []
-        self.main_screen.append(Button("START", self.ButtonPos.START, 50, s.win_w * s.scale / 2, 130 * s.scale, window))
+        self.score_screen = []
+        self.main_screen.append(Button("PLAY", self.ButtonPos.PLAY, 50, s.win_w * s.scale / 2, 130 * s.scale, window))
         self.main_screen.append(Button("SCORE", self.ButtonPos.SCORE, 30, s.win_w * s.scale / 2, 200 * s.scale, window))
         self.main_screen.append(Button("QUIT", self.ButtonPos.QUIT, 30, s.win_w * s.scale / 2, 250 * s.scale, window))
-        self.score_screen = []
         self.update_score()
 
     def update_score(self):
@@ -44,7 +44,7 @@ class Menu:
 
     def change_state(self):
         if controller.just_pressed["Down"]:
-            if self.btn == self.ButtonPos.START:
+            if self.btn == self.ButtonPos.PLAY:
                 self.btn = self.ButtonPos.SCORE
             elif self.btn == self.ButtonPos.SCORE:
                 self.btn = self.ButtonPos.QUIT
@@ -53,7 +53,7 @@ class Menu:
             if self.btn == self.ButtonPos.QUIT:
                 self.btn = self.ButtonPos.SCORE
             elif self.btn == self.ButtonPos.SCORE:
-                self.btn = self.ButtonPos.START
+                self.btn = self.ButtonPos.PLAY
             return 1
         elif controller.just_pressed["Start"]:
             if self.btn == self.ButtonPos.SCORE:

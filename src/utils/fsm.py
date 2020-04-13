@@ -7,3 +7,4 @@ class GameState(Enum):
     GAME_OVER = auto()
     GAME_OVER_RECORD = auto()
     MENU = auto()
+    START_MENU = auto()
