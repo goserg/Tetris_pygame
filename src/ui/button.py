@@ -1,4 +1,3 @@
-from utils.window_manager import window
 import settings.settings as s
 import pygame
 

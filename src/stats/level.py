@@ -17,6 +17,8 @@ def reset():
 
 def set_level(lines):
     global level
+    if level > lines // 10:
+        return
     level = lines // 10
     if level < len(LEVELS):
         s.speed = LEVELS[level]
