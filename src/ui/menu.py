@@ -59,6 +59,9 @@ class Menu:
             if self.btn == self.ButtonPos.SCORE:
                 self.state = self.MenuState.SCORE
                 self.btn = None
-            elif self.state == self.MenuState.SCORE:
+                return 1
+        elif controller.just_pressed["Back"]:
+            if self.state == self.MenuState.SCORE:
                 self.state = self.MenuState.MAIN
                 self.btn = self.ButtonPos.SCORE
+                return 1

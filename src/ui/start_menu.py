@@ -36,7 +36,7 @@ class StartMenu:
         :return 9: back
         """
         if self.name_input_enabled:
-            if controller.just_pressed["Start"]:
+            if controller.just_pressed["Pause"]:
                 name = self.name_input.get_name()
                 save.table.change_name(name, self.name_index)
                 self.player.text = name
@@ -91,6 +91,6 @@ class StartMenu:
 
         if self.name_input_enabled:
             self.name_input.draw()
-
-        for i in self.arrows:
-            i.draw()
+        else:
+            for i in self.arrows:
+                i.draw()

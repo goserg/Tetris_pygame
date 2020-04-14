@@ -4,6 +4,8 @@ keys = None
 gamepad = None
 
 pressed = {"Start": False,
+           "Pause": False,
+           "Back": False,
            "Rotate": False,
            "Left": False,
            "Right": False,
@@ -22,6 +24,8 @@ def get_keys():
     global just_pressed
     global keys
     just_pressed = {"Start": False,
+                    "Pause": False,
+                    "Back": False,
                     "Rotate": False,
                     "Left": False,
                     "Right": False,
@@ -31,13 +35,29 @@ def get_keys():
                     "Clear": False}
     keys = pygame.key.get_pressed()
     joy_direct = gamepad.get_hat()
-    # Start/Pause the game
-    if keys[pygame.K_ESCAPE] or gamepad.is_pause_pressed():
+    # Start the game
+    if keys[pygame.K_RETURN] or gamepad.is_A_pressed():
         if not pressed["Start"]:
             just_pressed["Start"] = True
         pressed["Start"] = True
     else:
         pressed["Start"] = False
+
+    # Pause the game
+    if keys[pygame.K_ESCAPE] or gamepad.is_start_pressed():
+        if not pressed["Pause"]:
+            just_pressed["Pause"] = True
+        pressed["Pause"] = True
+    else:
+        pressed["Pause"] = False
+
+    # Back button
+    if keys[pygame.K_ESCAPE] or gamepad.is_B_pressed():
+        if not pressed["Back"]:
+            just_pressed["Back"] = True
+        pressed["Back"] = True
+    else:
+        pressed["Back"] = False
 
     # Rotate clockwise
     if keys[pygame.K_UP] or keys[pygame.K_x] or gamepad.is_A_pressed():
@@ -94,11 +114,6 @@ def get_keys():
         pressed["Clear"] = True
     else:
         pressed["Clear"] = False
-
-
-def is_start_pressed():
-    if keys[pygame.K_SPACE] or gamepad.is_start_pressed():
-        return True
 
 
 def get_direction():

@@ -35,9 +35,9 @@ class NameInput:
         x0 = 0
         y0 = 0
         for letter in LETTERS:
-            x = x0 * 15 * s.scale + 180
-            y = y0 * 20 * s.scale + 150
-            self.buttons.append(Button(letter, letter, 7 * s.scale, x, y, self.plate))
+            x = x0 * 15 * s.scale + 90 * s.scale
+            y = y0 * 20 * s.scale + 75 * s.scale
+            self.buttons.append(Button(letter, letter, 14, x, y, self.plate))
             x0 += 1
             if x0 == 9:
                 x0 = 0
@@ -47,7 +47,7 @@ class NameInput:
         to_draw = False
         if self.move(controller.get_direction()) != 0:
             to_draw = True
-        if controller.just_pressed["Rotate"]:
+        if controller.just_pressed["Start"]:
             self.add_letter()
             to_draw = True
         elif controller.just_pressed["Clear"]:

@@ -1,10 +1,10 @@
 # Tetris
 Python & pygame
 
-![v0.4 screenshot](img/0.4-alpha.png?raw=true "v0.4 screenshot")  
+![v0.6 screenshot](img/0.6-alpha.png?raw=true "v0.6 screenshot")  
 
 
-supporting XBOX 360 For Windows (Controller)  
+recommended XBOX 360 For Windows (Controller)  
 
 pygame 1.9.6 required
 
@@ -13,6 +13,7 @@ Controls:
 Move left - Arrow left (D-pad left)    
 Move right - Arrow right (D-pad right)  
 Move down - Arrow down (D-pad down)  
-Rotate clockwise - Arrow up/X (A)  
-Hard drop - Space (D-pad up) (disabled)  
-
+Rotate clockwise - Arrow up/X (A)    
+Menu enter - Enter (A)  
+Menu back - Escape (B)  
+Pause - Escape (Start)

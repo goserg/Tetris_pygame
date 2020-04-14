@@ -50,8 +50,6 @@ def new_player():
                 if score_list.is_enough(stats.score.score):
                     score_list.add_score(start_menu.player.text, stats.score.score)
                     menu.update_score()
-                #     state = GameState.GAME_OVER_RECORD
-                # else:
                 return
     shade.shade = type(player)()
     shade.update_pos(player)
@@ -68,7 +66,7 @@ def draw():
     global state
     window.fill(s.colors["Background"])
     if state == GameState.PLAY or state == GameState.PAUSE or \
-            state == GameState.GAME_OVER_RECORD or state == GameState.GAME_OVER:
+            state == GameState.GAME_OVER:
         shade.draw()
         player.draw()
         next_indicator.next_one.draw()
@@ -94,20 +92,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    if state == GameState.GAME_OVER_RECORD:
-        if controller.just_pressed["Start"]:
-            to_draw = True
-            if score_list.is_enough(stats.score.score):
-                if score_list.add_score(ui.score_plate.get_name(), stats.score.score) == 1:
-                    menu.update_score()
-            state = GameState.MENU
-            next_indicator.change()
-            game_over()
-            new_player()
-            continue
-        if ui.score_plate.update():
-            to_draw = True
-    elif state == GameState.MENU:
+    if state == GameState.MENU:
         if menu.change_state():
             to_draw = True
         if controller.just_pressed["Start"]:
@@ -128,7 +113,7 @@ while run:
             state = GameState.MENU
 
     elif state == GameState.GAME_OVER:
-        if controller.just_pressed["Start"]:
+        if controller.just_pressed["Start"] or controller.just_pressed["Pause"]:
             to_draw = True
             state = GameState.MENU
             next_indicator.change()
@@ -136,7 +121,7 @@ while run:
             new_player()
             continue
     elif state == GameState.PLAY:
-        if controller.just_pressed["Start"]:
+        if controller.just_pressed["Pause"]:
             to_draw = True
             state = GameState.PAUSE
         p_event = player.update()
@@ -146,7 +131,7 @@ while run:
             new_player()
             to_draw = True
     elif state == GameState.PAUSE:
-        if controller.just_pressed["Start"]:
+        if controller.just_pressed["Pause"]:
             to_draw = True
             state = GameState.PLAY
 
