@@ -1,6 +1,6 @@
 from ui.text import Text
 from ui.ui_block import UIBlock
-from ui.name_input import NameInput
+from ui.menu.name_input import NameInput
 import settings.settings as s
 from utils.fsm import GameState
 

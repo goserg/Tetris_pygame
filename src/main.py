@@ -12,8 +12,8 @@ from ui.ui import ui
 import stats.score
 import stats.level
 from utils.fsm import GameState
-from ui.menu import Menu
-from ui.start_menu import StartMenu
+from ui.menu.menu import Menu
+from ui.menu.start_menu import StartMenu
 from stats.high_score import table as score_list
 
 pygame.init()
@@ -34,8 +34,8 @@ def game_over():
     border = Border()
     stats.score.clear()
     well.lines_cleared = 0
-    ui.lines_cleared_block.lst[1]._text = "0"
-    ui.score_block.lst[1]._text = "0"
+    ui.lines_cleared_block.lst[1].text = "0"
+    ui.score_block.lst[1].text = "0"
     s.speed = 48
 
 
@@ -93,25 +93,15 @@ while run:
             run = False
 
     if state == GameState.MENU:
-        if menu.change_state():
-            to_draw = True
-        if controller.just_pressed["Start"]:
-            to_draw = True
-            if menu.btn == menu.ButtonPos.PLAY:
-                state = GameState.START_MENU
-            elif menu.btn == menu.ButtonPos.QUIT:
-                run = False
-    elif state == GameState.START_MENU:
-        status = start_menu.update()
+        status = menu.update()
 
-        if status:
-            to_draw = True
-        if status == 1:
+        if status == 9:
+            run = False
+        elif status == 2:
             state = GameState.PLAY
             player.reset_timers()
-        elif status == 9:
-            state = GameState.MENU
-
+        elif status:
+            to_draw = True
     elif state == GameState.GAME_OVER:
         if controller.just_pressed["Start"] or controller.just_pressed["Pause"]:
             to_draw = True
