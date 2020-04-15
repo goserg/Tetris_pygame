@@ -11,7 +11,7 @@ def reset():
     global level
     level = 0
     s.speed = LEVELS[level]
-    ui.level_block.lst[1]._text = str(level)
+    ui.level_block.lst[1].text = str(level)
     s.colors = colors.level_1
 
 
@@ -25,7 +25,7 @@ def set_level(lines):
     else:
         s.speed = LEVELS[-1]
     color_change()
-    ui.level_block.lst[1]._text = str(level)
+    ui.level_block.lst[1].text = str(level)
 
 
 def color_change():

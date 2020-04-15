@@ -14,21 +14,21 @@ def clear():
     stats.level.reset()
 
 
-def add(l):
+def add(lns):
     global score
     global lines
-    if l == 0:
+    if lns == 0:
         inc = 0
-    elif l == 1:
+    elif lns == 1:
         inc = 40
-    elif l == 2:
+    elif lns == 2:
         inc = 100
-    elif l == 3:
+    elif lns == 3:
         inc = 300
     else:
         inc = 1200
     score += inc * (stats.level.level + 1)
-    lines += l
-    ui.score_block.lst[1]._text = str(score)
-    ui.lines_cleared_block.lst[1]._text = str(lines)
+    lines += lns
+    ui.score_block.lst[1].text = str(score)
+    ui.lines_cleared_block.lst[1].text = str(lines)
     stats.level.set_level(lines)
