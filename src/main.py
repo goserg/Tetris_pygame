@@ -100,6 +100,7 @@ while run:
         elif status == 2:
             state = GameState.PLAY
             player.reset_timers()
+            to_draw = True
         elif status:
             to_draw = True
     elif state == GameState.GAME_OVER:

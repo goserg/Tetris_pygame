@@ -51,6 +51,14 @@ class Tetromino:
         if controller.just_pressed["Rotate"]:
             if self.try_rotation():
                 to_draw = 1
+            elif s.wall_push and self.move(1) == 1 and self.try_rotation():
+                to_draw = 1
+            elif s.wall_push and self.move(-1) == 1 and self.try_rotation():
+                to_draw = 1
+            elif s.wall_push and self.body[0].color_tag == "TypeI" and self.move(1) == 1 and self.move(1) == 1 and self.try_rotation():
+                to_draw = 1
+            elif s.wall_push and self.body[0].color_tag == "TypeI" and self.move(-1) == 1 and self.move(-1) == 1 and self.try_rotation():
+                to_draw = 1
 
         if (controller.just_pressed["Down"] or (controller.pressed["Down"] and not controller.down_lock))\
                 or self.fall_timer > s.speed:

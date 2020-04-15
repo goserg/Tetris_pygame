@@ -9,6 +9,7 @@ auto_shift = 6
 delayed_auto_shift = 16
 flat = True
 grid = False
+wall_push = True
 
 # window
 win_h = 440
