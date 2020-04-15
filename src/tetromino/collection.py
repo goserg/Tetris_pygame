@@ -6,7 +6,6 @@ class TypeI(Tetromino):
         super().__init__()
         self.pos = (4, -1)
         self.set_0_rotation()
-        self.state = 0
         for i in self.body:
             i.color_tag = "TypeI"
 

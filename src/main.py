@@ -34,8 +34,8 @@ def game_over():
     border = Border()
     stats.score.clear()
     well.lines_cleared = 0
-    ui.lines_cleared_block.lst[1].text = "0"
-    ui.score_block.lst[1].text = "0"
+    ui.lines_cleared_block.lst[1]._text = "0"
+    ui.score_block.lst[1]._text = "0"
     s.speed = 48
 
 
@@ -48,7 +48,7 @@ def new_player():
             if i.position == j.position:
                 state = GameState.GAME_OVER
                 if score_list.is_enough(stats.score.score):
-                    score_list.add_score(start_menu.player.text, stats.score.score)
+                    score_list.add_score(stats.score.player_name, stats.score.score)
                     menu.update_score()
                 return
     shade.shade = type(player)()
