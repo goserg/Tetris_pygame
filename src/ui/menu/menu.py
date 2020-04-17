@@ -15,9 +15,9 @@ class Menu:
         SCORE = auto()
 
     class ButtonPos(Enum):
-        PLAY = auto()
-        SCORE = auto()
-        QUIT = auto()
+        PLAY = "play"
+        SCORE = "score"
+        QUIT = "quit"
 
     def __init__(self) -> None:
         self.btn = self.ButtonPos.PLAY
@@ -27,7 +27,7 @@ class Menu:
         self.main_screen.append(
             Button(
                 "PLAY",
-                self.ButtonPos.PLAY,
+                self.ButtonPos.PLAY.value,
                 50,
                 s.win_w * s.scale / 2,
                 130 * s.scale,
@@ -37,7 +37,7 @@ class Menu:
         self.main_screen.append(
             Button(
                 "SCORE",
-                self.ButtonPos.SCORE,
+                self.ButtonPos.SCORE.value,
                 30,
                 s.win_w * s.scale / 2,
                 200 * s.scale,
@@ -47,7 +47,7 @@ class Menu:
         self.main_screen.append(
             Button(
                 "QUIT",
-                self.ButtonPos.QUIT,
+                self.ButtonPos.QUIT.value,
                 30,
                 s.win_w * s.scale / 2,
                 250 * s.scale,
@@ -66,7 +66,14 @@ class Menu:
         :return 9: quit
         """
         result = 0
-        if controller.just_pressed["Clear"] and self.state != self.MenuState.MAIN:
+        if (
+            controller.just_pressed["Clear"]
+            and self.state != self.MenuState.MAIN
+            and not (
+                self.state == self.MenuState.START
+                and self.start_menu.name_input_enabled
+            )
+        ):
             self.state = self.MenuState.MAIN
             result = 1
         if self.state == self.MenuState.MAIN:
@@ -108,7 +115,7 @@ class Menu:
     def draw(self) -> None:
         if self.state == self.MenuState.MAIN:
             for i in self.main_screen:
-                i.draw(self.btn)
+                i.draw(str(self.btn.value))
         elif self.state == self.MenuState.SCORE:
             for i in self.score_screen:
                 i.draw()

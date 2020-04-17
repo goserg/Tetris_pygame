@@ -41,9 +41,7 @@ class NameInput:
         for letter in LETTERS:
             x = x0 * 15 * s.scale + 90 * s.scale
             y = y0 * 20 * s.scale + 75 * s.scale
-            self.buttons.append(
-                Button(letter, letter, 14, x, y, self.plate)
-            )  # TODO: revisit after Button refactoring
+            self.buttons.append(Button(letter, letter, 14, x, y, self.plate))
             x0 += 1
             if x0 == 9:
                 x0 = 0
@@ -57,14 +55,14 @@ class NameInput:
             self.add_letter()
             to_draw = True
         elif controller.just_pressed["Clear"]:
-            self.clear_name()
+            self.remove_letter()
             to_draw = True
         return to_draw
 
     def draw(self) -> None:
         self.plate.fill((50, 50, 50))
         for i in self.buttons:
-            i.draw(self.letter)  # TODO: revisit after Button refactoring
+            i.draw(self.letter)
 
         surf_rect = self.plate.get_rect()
         surf_rect.center = (s.win_w * s.scale / 2, s.win_h * s.scale / 2)
@@ -113,7 +111,7 @@ class NameInput:
             self.name += self.letter
         self.name_text.text = self.name
 
-    def clear_name(self) -> None:
+    def remove_letter(self) -> None:
         if self.name == "enter your name":
             self.name_text.text = self.name
             return

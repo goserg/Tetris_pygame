@@ -2,10 +2,15 @@ import settings.settings as s
 import pygame
 
 
-# TODO: think about "btn" argument
 class Button:
     def __init__(
-        self, text: str, btn, font_size: int, x: int, y: int, surface: pygame.Surface
+        self,
+        text: str,
+        btn: str,
+        font_size: int,
+        x: int,
+        y: int,
+        surface: pygame.Surface,
     ) -> None:
         self.color = None
         self.font_size = font_size
@@ -19,8 +24,7 @@ class Button:
             (len(text) * font_size * s.scale, font_size * s.scale * 1.4)
         )
 
-    # TODO: think about "btn" argument
-    def draw(self, btn) -> None:
+    def draw(self, btn: str) -> None:
         if self.btn == btn:
             self.color = (0, 0, 0)
             self.plate.fill((200, 200, 200))
