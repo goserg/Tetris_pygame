@@ -6,8 +6,7 @@ import utils.controller as controller
 
 
 class Tetromino:
-
-    def __init__(self):
+    def __init__(self) -> None:
         self.body = []
         self.pos = (5, 0)
         self.state = 0
@@ -23,7 +22,7 @@ class Tetromino:
         self.move_timer = 0
         self.fall_timer = 0
 
-    def update(self):
+    def update(self) -> int:
         """
 
         :return: 0 if nothing happened
@@ -55,13 +54,27 @@ class Tetromino:
                 to_draw = 1
             elif s.wall_push and self.move(-1) == 1 and self.try_rotation():
                 to_draw = 1
-            elif s.wall_push and self.body[0].color_tag == "TypeI" and self.move(1) == 1 and self.move(1) == 1 and self.try_rotation():
+            elif (
+                s.wall_push
+                and self.body[0].color_tag == "TypeI"
+                and self.move(1) == 1
+                and self.move(1) == 1
+                and self.try_rotation()
+            ):
                 to_draw = 1
-            elif s.wall_push and self.body[0].color_tag == "TypeI" and self.move(-1) == 1 and self.move(-1) == 1 and self.try_rotation():
+            elif (
+                s.wall_push
+                and self.body[0].color_tag == "TypeI"
+                and self.move(-1) == 1
+                and self.move(-1) == 1
+                and self.try_rotation()
+            ):
                 to_draw = 1
 
-        if (controller.just_pressed["Down"] or (controller.pressed["Down"] and not controller.down_lock))\
-                or self.fall_timer > s.speed:
+        if (
+            controller.just_pressed["Down"]
+            or (controller.pressed["Down"] and not controller.down_lock)
+        ) or self.fall_timer > s.speed:
             controller.down_lock = False
             self.fall_timer = 0
             if self.move_down() == 1:
@@ -76,11 +89,11 @@ class Tetromino:
         self.fall_timer += 1
         return to_draw
 
-    def reset_timers(self):
+    def reset_timers(self) -> None:
         self.move_timer = 0
         self.fall_timer = 0
 
-    def move_down(self):
+    def move_down(self) -> int:
         """
 
         :return:  1 if landed, 2 if moved
@@ -99,7 +112,7 @@ class Tetromino:
         self.pos = self.pos[0], self.pos[1] + 1
         return 2
 
-    def move(self, direct):
+    def move(self, direct: int) -> int:
         """
 
         :param direct: 1 if move right, -1 if move left
@@ -119,7 +132,7 @@ class Tetromino:
         self.pos = self.pos[0] + direct, self.pos[1]
         return 1
 
-    def try_rotation(self):
+    def try_rotation(self) -> int:
         """
 
         :return: 0 if can't rotate, 1 if rotated
@@ -134,17 +147,17 @@ class Tetromino:
                     return 0
         return 1
 
-    def drop(self):
+    def drop(self) -> None:
         while self.move_down() != 1:
             pass
 
-    def transfer_to_level(self):
+    def transfer_to_level(self) -> None:
         for cube in self.body:
             well.add(cube)
         well.clear_lines()
         self.__init__()
 
-    def rotate(self):
+    def rotate(self) -> None:
         if self.state == 0:
             self.state = 1
             self.set_1_rotation()
@@ -158,7 +171,7 @@ class Tetromino:
             self.state = 0
             self.set_0_rotation()
 
-    def rotate_back(self):
+    def rotate_back(self) -> None:
         if self.state == 0:
             self.state = 3
             self.set_3_rotation()
@@ -172,18 +185,18 @@ class Tetromino:
             self.state = 2
             self.set_2_rotation()
 
-    def set_0_rotation(self):
+    def set_0_rotation(self) -> None:
         pass
 
-    def set_1_rotation(self):
+    def set_1_rotation(self) -> None:
         pass
 
-    def set_2_rotation(self):
+    def set_2_rotation(self) -> None:
         pass
 
-    def set_3_rotation(self):
+    def set_3_rotation(self) -> None:
         pass
 
-    def draw(self):
+    def draw(self) -> None:
         for i in self.body:
             i.draw()

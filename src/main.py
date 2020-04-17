@@ -27,7 +27,7 @@ menu = Menu()
 start_menu = StartMenu()
 
 
-def game_over():
+def game_over() -> None:
     global border
     global state
     well.cubes.clear()
@@ -39,7 +39,7 @@ def game_over():
     s.speed = 48
 
 
-def new_player():
+def new_player() -> None:
     global player
     global state
     player = type(next_indicator.next_one)()
@@ -62,11 +62,14 @@ controller.keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
 
-def draw():
+def draw() -> None:
     global state
     window.fill(s.colors["Background"])
-    if state == GameState.PLAY or state == GameState.PAUSE or \
-            state == GameState.GAME_OVER:
+    if (
+        state == GameState.PLAY
+        or state == GameState.PAUSE
+        or state == GameState.GAME_OVER
+    ):
         shade.draw()
         player.draw()
         next_indicator.next_one.draw()
@@ -77,7 +80,7 @@ def draw():
     elif state == GameState.START_MENU:
         start_menu.draw()
     if s.grid:
-        grid.draw() 
+        grid.draw()
 
     pygame.display.update()
 

@@ -6,7 +6,7 @@ lines = 0
 player_name = "anonymous"
 
 
-def clear():
+def clear() -> None:
     global score
     global lines
     score = 0
@@ -14,7 +14,7 @@ def clear():
     stats.level.reset()
 
 
-def add(lns):
+def add(lns: int) -> None:
     global score
     global lines
     if lns == 0:

@@ -27,4 +27,4 @@ colors = colors.level_1
 drop_enabled = False  # is Hard Drop is used
 
 # font
-font = 'lucidasanstypewriter'
+font = "lucidasanstypewriter"

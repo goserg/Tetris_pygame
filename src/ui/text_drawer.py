@@ -3,7 +3,7 @@ import settings.settings as s
 from utils.window_manager import window
 
 
-def display_text(text, color, size, x, y):
+def display_text(text: str, color: tuple, size: int, x: int, y: int) -> None:
     size = int(size * s.scale)
     font = pygame.font.SysFont(s.font, size)
     text_surf = font.render(text, True, color)

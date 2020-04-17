@@ -2,7 +2,7 @@ import pygame
 
 
 class GamepadController:
-    def __init__(self):
+    def __init__(self) -> None:
         if pygame.joystick.get_count() > 0:
             self.enabled = True
             self.joystick = pygame.joystick.Joystick(0)
@@ -12,12 +12,12 @@ class GamepadController:
         else:
             self.enabled = False
 
-    def get_hat(self):
+    def get_hat(self) -> tuple:
         if self.enabled:
             return self.joystick.get_hat(0)
         return 0, 0
 
-    def is_start_pressed(self):
+    def is_start_pressed(self) -> bool:
         if self.enabled:
             return self.joystick.get_button(7)
 

@@ -4,11 +4,11 @@ import pygame
 
 
 class Grid:
-    def __init__(self):
+    def __init__(self) -> None:
         self.rows = s.game_h // s.cell_size
         self.cols = s.game_w // s.cell_size
 
-    def draw(self):
+    def draw(self) -> None:
         x = 0
         for _ in range(self.cols):
             x += s.cell_size * s.scale

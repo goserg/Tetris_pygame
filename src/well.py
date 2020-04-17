@@ -1,27 +1,25 @@
-import cube
-import settings.settings as s
-from ui.ui import ui
+from cube import Cube
 import stats.score
 
 cubes = []
 lines_cleared = 0
 
 
-def add(c: cube.Cube):
+def add(c: Cube) -> None:
     if c not in cubes:
         cubes.append(c)
 
 
-def remove(c: cube.Cube):
+def remove(c: Cube) -> None:
     cubes.remove(c)
 
 
-def draw():
+def draw() -> None:
     for i in cubes:
         i.draw()
 
 
-def check_line():
+def check_line() -> list:
     places = {}
     for i in cubes:
         if i.tag == "Block":
@@ -36,11 +34,10 @@ def check_line():
     return to_pop
 
 
-def clear_lines():
+def clear_lines() -> None:
     to_pop = check_line()
     global lines_cleared
     stats.score.add(len(to_pop))
-    change_speed(lines_cleared)
     to_remove = []
     if not to_pop:
         return
@@ -54,31 +51,4 @@ def clear_lines():
             if j.tag == "Block" and j.position[1] < i:
                 x = j.position[0]
                 y = j.position[1]
-                j.position = (x, y+1)
-
-
-def change_speed(lines):
-    if lines_cleared > 80:
-        s.speed = 10
-        return
-    if lines_cleared > 70:
-        s.speed = 15
-        return
-    if lines_cleared > 60:
-        s.speed = 20
-        return
-    if lines_cleared > 50:
-        s.speed = 25
-        return
-    if lines_cleared > 40:
-        s.speed = 30
-        return
-    if lines_cleared > 30:
-        s.speed = 35
-        return
-    if lines_cleared > 20:
-        s.speed = 40
-        return
-    if lines_cleared > 10:
-        s.speed = 45
-        return
+                j.position = (x, y + 1)

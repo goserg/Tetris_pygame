@@ -10,40 +10,46 @@ MAX_LEN = 15
 
 
 class NameInput:
-    def __init__(self):
+    def __init__(self) -> None:
         self.name = "enter your name"
         self.letter = "A"
         self.buttons = []
         self.move_timer = 0
         self.plate = pygame.Surface((300 * s.scale, 300 * s.scale))
 
-        self.game_over = Text("Name change", (255, 255, 255), 30,
-                              s.win_w // 2,
-                              s.win_h // 4)
-        self.name_text = Text(self.name, (255, 255, 255), 30,
-                              s.win_w // 2,
-                              s.win_h * 2 // 4)
-        self.press_a_btn = Text("A to select letter", (255, 255, 255), 15,
-                                s.win_w // 2,
-                                s.win_h * 3 // 4)
-        self.press_start_btn = Text("Start to confirm", (255, 255, 255), 15,
-                                    s.win_w // 2,
-                                    s.win_h * 3 // 4 + 15)
-        self.press_b_btn = Text("B to clear letter", (255, 255, 255), 15,
-                                s.win_w // 2,
-                                s.win_h * 3 // 4 + 30)
+        self.game_over = Text(
+            "Name change", (255, 255, 255), 30, s.win_w // 2, s.win_h // 4
+        )
+        self.name_text = Text(
+            self.name, (255, 255, 255), 30, s.win_w // 2, s.win_h * 2 // 4
+        )
+        self.press_a_btn = Text(
+            "A to select letter", (255, 255, 255), 15, s.win_w // 2, s.win_h * 3 // 4
+        )
+        self.press_start_btn = Text(
+            "Start to confirm", (255, 255, 255), 15, s.win_w // 2, s.win_h * 3 // 4 + 15
+        )
+        self.press_b_btn = Text(
+            "B to clear letter",
+            (255, 255, 255),
+            15,
+            s.win_w // 2,
+            s.win_h * 3 // 4 + 30,
+        )
         x0 = 0
         y0 = 0
         for letter in LETTERS:
             x = x0 * 15 * s.scale + 90 * s.scale
             y = y0 * 20 * s.scale + 75 * s.scale
-            self.buttons.append(Button(letter, letter, 14, x, y, self.plate))
+            self.buttons.append(
+                Button(letter, letter, 14, x, y, self.plate)
+            )  # TODO: revisit after Button refactoring
             x0 += 1
             if x0 == 9:
                 x0 = 0
                 y0 += 1
 
-    def update(self):
+    def update(self) -> bool:
         to_draw = False
         if self.move(controller.get_direction()) != 0:
             to_draw = True
@@ -55,10 +61,10 @@ class NameInput:
             to_draw = True
         return to_draw
 
-    def draw(self):
+    def draw(self) -> None:
         self.plate.fill((50, 50, 50))
         for i in self.buttons:
-            i.draw(self.letter)
+            i.draw(self.letter)  # TODO: revisit after Button refactoring
 
         surf_rect = self.plate.get_rect()
         surf_rect.center = (s.win_w * s.scale / 2, s.win_h * s.scale / 2)
@@ -70,7 +76,7 @@ class NameInput:
         self.press_start_btn.draw()
         self.press_b_btn.draw()
 
-    def move(self, direction):
+    def move(self, direction: tuple) -> int:
         """
 
         :param direction: tuple: controls direction
@@ -100,14 +106,14 @@ class NameInput:
         self.letter = LETTERS[index]
         return 1
 
-    def add_letter(self):
+    def add_letter(self) -> None:
         if self.name == "enter your name" and self.letter != " ":
             self.name = self.letter
         elif len(self.name) < MAX_LEN:
             self.name += self.letter
         self.name_text.text = self.name
 
-    def clear_name(self):
+    def clear_name(self) -> None:
         if self.name == "enter your name":
             self.name_text.text = self.name
             return
@@ -118,11 +124,11 @@ class NameInput:
         self.name = self.name[:-1]
         self.name_text.text = self.name
 
-    def get_name(self):
+    def get_name(self) -> str:
         if self.name == "enter your name":
             return "anonymous"
         return self.name
 
-    def set_name(self, name):
+    def set_name(self, name: str) -> None:
         self.name = name
         self.name_text.text = name

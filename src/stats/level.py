@@ -2,12 +2,43 @@ import settings.settings as s
 import settings.colors as colors
 from ui.ui import ui
 
-LEVELS = [48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]
+LEVELS = [
+    48,
+    43,
+    38,
+    33,
+    28,
+    23,
+    18,
+    13,
+    8,
+    6,
+    5,
+    5,
+    5,
+    4,
+    4,
+    4,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+]
 
 level = 0
 
 
-def reset():
+def reset() -> None:
     global level
     level = 0
     s.speed = LEVELS[level]
@@ -15,7 +46,7 @@ def reset():
     s.colors = colors.level_1
 
 
-def set_level(lines):
+def set_level(lines: int) -> None:
     global level
     if level > lines // 10:
         return
@@ -28,7 +59,7 @@ def set_level(lines):
     ui.level_block.lst[1].text = str(level)
 
 
-def color_change():
+def color_change() -> None:
     n = level % 4
     if n == 0:
         s.colors = colors.level_1

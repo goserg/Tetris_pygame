@@ -1,10 +1,11 @@
 import well
+from tetromino.tetromino import Tetromino
 
 
-shade = None
+shade: Tetromino
 
 
-def update_pos(player):
+def update_pos(player: Tetromino) -> None:
     shade.pos = (player.pos[0], player.pos[1])
     if player.state == 0:
         shade.set_0_rotation()

@@ -6,7 +6,7 @@ from utils.fsm import GameState
 
 
 class UI:
-    def __init__(self):
+    def __init__(self) -> None:
         self.text_color = (200, 200, 200)
         self.next_text = Text("next", self.text_color, 20, 290, 20)
         self.lines_cleared_block = UIBlock(290, 120)
@@ -19,16 +19,14 @@ class UI:
         self.level_block.add(Text("level", self.text_color, 20, 0, 0))
         self.level_block.add(Text("0", self.text_color, 20, 0, 0))
 
-        self.pause = Text("PAUSE", (255, 255, 255), 20,
-                          s.game_w // 2,
-                          s.game_h // 2)
-        self.game_over = Text("GAME OVER", (255, 255, 255), 20,
-                          s.game_w // 2,
-                          s.game_h // 2)
+        self.pause = Text("PAUSE", (255, 255, 255), 20, s.game_w // 2, s.game_h // 2)
+        self.game_over = Text(
+            "GAME OVER", (255, 255, 255), 20, s.game_w // 2, s.game_h // 2
+        )
 
         self.score_plate = NameInput()
 
-    def draw(self, state):
+    def draw(self, state: GameState) -> None:
         self.next_text.draw()
         self.lines_cleared_block.draw()
         self.score_block.draw()

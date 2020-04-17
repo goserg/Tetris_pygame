@@ -1,38 +1,43 @@
 import pygame
+from utils.gamepad_controller import GamepadController
 
-keys = None
-gamepad = None
+keys = []
+gamepad: GamepadController
 
-pressed = {"Start": False,
-           "Pause": False,
-           "Back": False,
-           "Rotate": False,
-           "Left": False,
-           "Right": False,
-           "Up": False,
-           "Down": False,
-           "Drop": False,
-           "Clear": False}
+pressed = {
+    "Start": False,
+    "Pause": False,
+    "Back": False,
+    "Rotate": False,
+    "Left": False,
+    "Right": False,
+    "Up": False,
+    "Down": False,
+    "Drop": False,
+    "Clear": False,
+}
 
 just_pressed = {}
 
 down_lock = False
 
 
-def get_keys():
+def get_keys() -> None:
     global pressed
     global just_pressed
     global keys
-    just_pressed = {"Start": False,
-                    "Pause": False,
-                    "Back": False,
-                    "Rotate": False,
-                    "Left": False,
-                    "Right": False,
-                    "Up": False,
-                    "Down": False,
-                    "Drop": False,
-                    "Clear": False}
+    just_pressed = {
+        "Start": False,
+        "Pause": False,
+        "Back": False,
+        "Rotate": False,
+        "Left": False,
+        "Right": False,
+        "Up": False,
+        "Down": False,
+        "Drop": False,
+        "Clear": False,
+    }
     keys = pygame.key.get_pressed()
     joy_direct = gamepad.get_hat()
     # Start the game
@@ -116,7 +121,7 @@ def get_keys():
         pressed["Clear"] = False
 
 
-def get_direction():
+def get_direction() -> tuple:
     joy_direct = gamepad.get_hat()
     if keys[pygame.K_DOWN] or joy_direct == (0, 1):
         return 0, 1

@@ -12,22 +12,36 @@ import stats.level
 
 
 class StartMenu:
-    def __init__(self):
+    def __init__(self) -> None:
         self.move_timer = 0
         self.text = Text("select player", (200, 200, 200), 30, s.win_w / 2, 50)
-        self.text2 = Text("Y to change current player name", (200, 200, 200), 15, s.win_w / 2, 75)
+        self.text2 = Text(
+            "Y to change current player name", (200, 200, 200), 15, s.win_w / 2, 75
+        )
 
         self.name_input = NameInput()
         self.name_input_enabled = False
 
-        self.player_button = SwitcherButton(save.table.players, 0, (200, 200, 200), 20,
-                                            s.win_w / 4 + 20, s.win_h / 2,
-                                            horizontal=True)
-        self.level_button = SwitcherButton(list(map(str, range(31))), 0, (200, 200, 200), 20,
-                                           s.win_w * 3 / 4, s.win_h / 2,
-                                           horizontal=False)
+        self.player_button = SwitcherButton(
+            save.table.players,
+            0,
+            (200, 200, 200),
+            20,
+            s.win_w / 4 + 20,
+            s.win_h / 2,
+            horizontal=True,
+        )
+        self.level_button = SwitcherButton(
+            list(map(str, range(31))),
+            0,
+            (200, 200, 200),
+            20,
+            s.win_w * 3 / 4,
+            s.win_h / 2,
+            horizontal=False,
+        )
 
-    def update(self):
+    def update(self) -> int:
         """
 
         :return 0: no change
@@ -64,7 +78,7 @@ class StartMenu:
             return 0
         return 1
 
-    def draw(self):
+    def draw(self) -> None:
         self.text.draw()
         self.text2.draw()
 

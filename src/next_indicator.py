@@ -1,10 +1,11 @@
 import tetromino.generator
 import tetromino.collection
+from tetromino.tetromino import Tetromino
 
-next_one = None
+next_one: Tetromino
 
 
-def change():
+def change() -> None:
     global next_one
     next_one = tetromino.generator.get_new()
     if not next_one:
