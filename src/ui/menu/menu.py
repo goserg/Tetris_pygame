@@ -1,7 +1,8 @@
 from utils.window_manager import window
+from utils.fsm import MenuState
 from ui.button import Button
 from ui.text import Text
-from enum import Enum, auto
+from enum import Enum
 import utils.controller as controller
 import settings.settings as s
 import stats.high_score as high_score
@@ -9,11 +10,6 @@ from ui.menu.start_menu import StartMenu
 
 
 class Menu:
-    class MenuState(Enum):
-        MAIN = auto()
-        START = auto()
-        SCORE = auto()
-
     class ButtonPos(Enum):
         PLAY = "play"
         SCORE = "score"
@@ -21,7 +17,7 @@ class Menu:
 
     def __init__(self) -> None:
         self.btn = self.ButtonPos.PLAY
-        self.state = self.MenuState.MAIN
+        self.state = MenuState.MAIN
         self.main_screen = []
         self.score_screen = []
         self.main_screen.append(
@@ -68,29 +64,29 @@ class Menu:
         result = 0
         if (
             controller.just_pressed["Clear"]
-            and self.state != self.MenuState.MAIN
+            and self.state != MenuState.MAIN
             and not (
-                self.state == self.MenuState.START
+                self.state == MenuState.START
                 and self.start_menu.name_input_enabled
             )
         ):
-            self.state = self.MenuState.MAIN
+            self.state = MenuState.MAIN
             result = 1
-        if self.state == self.MenuState.MAIN:
+        if self.state == MenuState.MAIN:
             if controller.just_pressed["Start"]:
                 if self.btn == self.ButtonPos.QUIT:
                     return 9
                 elif self.btn == self.ButtonPos.PLAY:
-                    self.state = self.MenuState.START
+                    self.state = MenuState.START
                     result = 1
                 elif self.btn == self.ButtonPos.SCORE:
-                    self.state = self.MenuState.SCORE
+                    self.state = MenuState.SCORE
                     result = 1
             result = max(result, self.change_state())
-        elif self.state == self.MenuState.START:
+        elif self.state == MenuState.START:
             result = max(self.start_menu.update(), result)
         if result == 2:
-            self.state = self.MenuState.MAIN
+            self.state = MenuState.MAIN
             return 2
         return result
 
@@ -113,13 +109,13 @@ class Menu:
             )
 
     def draw(self) -> None:
-        if self.state == self.MenuState.MAIN:
+        if self.state == MenuState.MAIN:
             for i in self.main_screen:
                 i.draw(str(self.btn.value))
-        elif self.state == self.MenuState.SCORE:
+        elif self.state == MenuState.SCORE:
             for i in self.score_screen:
                 i.draw()
-        elif self.state == self.MenuState.START:
+        elif self.state == MenuState.START:
             self.start_menu.draw()
 
     def change_state(self) -> int:

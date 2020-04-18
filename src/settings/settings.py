@@ -7,9 +7,9 @@ fps_cap = 60
 speed = 48  # 1 - maximum
 auto_shift = 6
 delayed_auto_shift = 16
-flat = True
-grid = False
-wall_push = True
+flat_graphics_enabled = False
+grid_enabled = False
+is_wall_push_enabled = True
 
 # window
 win_h = 440

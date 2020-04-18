@@ -37,7 +37,7 @@ class Cube:
         size = s.cell_size * s.scale
         pygame.draw.rect(window, s.colors[self.color_tag], (x, y, size, size))
 
-        if not s.flat:
+        if not s.flat_graphics_enabled:
             top_color = color_brighten(s.colors[self.color_tag], 0.7)
             pygame.draw.polygon(
                 window,

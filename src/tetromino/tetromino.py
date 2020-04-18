@@ -25,9 +25,7 @@ class Tetromino:
     def update(self) -> int:
         """
 
-        :return: 0 if nothing happened
-        :return: 1 if moved
-        :return: 2 if landed
+        :returns: 0 if nothing happened; 1 if moved; 2 if landed
         """
         to_draw = 0
         if controller.just_pressed["Left"]:
@@ -50,27 +48,16 @@ class Tetromino:
         if controller.just_pressed["Rotate"]:
             if self.try_rotation():
                 to_draw = 1
-            elif s.wall_push and self.move(1) == 1 and self.try_rotation():
-                to_draw = 1
-            elif s.wall_push and self.move(-1) == 1 and self.try_rotation():
-                to_draw = 1
-            elif (
-                s.wall_push
-                and self.body[0].color_tag == "TypeI"
-                and self.move(1) == 1
-                and self.move(1) == 1
-                and self.try_rotation()
-            ):
-                to_draw = 1
-            elif (
-                s.wall_push
-                and self.body[0].color_tag == "TypeI"
-                and self.move(-1) == 1
-                and self.move(-1) == 1
-                and self.try_rotation()
-            ):
-                to_draw = 1
-
+            elif s.is_wall_push_enabled:
+                if self.move(1) == 1 and self.try_rotation():
+                    to_draw = 1
+                elif self.move(-1) == 1 and self.try_rotation():
+                    to_draw = 1
+                elif self.body[0].color_tag == "TypeI":
+                    if self.move(1) == 1 and self.move(1) == 1 and self.try_rotation():
+                        to_draw = 1
+                    elif self.move(-1) == 1 and self.move(-1) == 1 and self.try_rotation():
+                        to_draw = 1
         if (
             controller.just_pressed["Down"]
             or (controller.pressed["Down"] and not controller.down_lock)
@@ -138,13 +125,12 @@ class Tetromino:
         :return: 0 if can't rotate, 1 if rotated
         """
         self.rotate()
-        shade.shade.rotate()
         for i in well.cubes:
             for j in self.body:
                 if i.position == j.position:
                     self.rotate_back()
-                    shade.shade.rotate_back()
                     return 0
+        shade.shade.rotate()
         return 1
 
     def drop(self) -> None:

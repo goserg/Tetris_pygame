@@ -26,6 +26,8 @@ class UI:
 
         self.score_plate = NameInput()
 
+        self.fps = Text("fps: 60", self.text_color, 20, 290, 400)
+
     def draw(self, state: GameState) -> None:
         self.next_text.draw()
         self.lines_cleared_block.draw()
@@ -37,6 +39,10 @@ class UI:
             self.game_over.draw()
         elif state == GameState.PAUSE:
             self.pause.draw()
+        self.fps.draw()
+
+    def update_fps(self, fps: str) -> None:
+        self.fps.text = "fps: " + fps
 
 
 ui = UI()
