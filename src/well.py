@@ -1,8 +1,8 @@
 from cube import Cube
 import stats.score
-from typing import Dict
+from typing import Dict, List
 
-cubes = []
+cubes: List[Cube] = []
 lines_cleared = 0
 
 
@@ -21,14 +21,14 @@ def draw() -> None:
 
 
 def check_line() -> list:
-    places: Dict[int, int] = {}
+    places: Dict[float, float] = {}
     for i in cubes:
         if i.tag == "Block":
-            if i.position[1] in places.keys():
-                places[i.position[1]] += 1
+            if i.position.y in places.keys():
+                places[i.position.y] += 1
             else:
-                places[i.position[1]] = 1
-    to_pop = []
+                places[i.position.y] = 1
+    to_pop: List[float] = []
     for key, value in places.items():
         if value == 10:
             to_pop.append(key)
@@ -43,13 +43,11 @@ def clear_lines() -> None:
     if not to_pop:
         return
     for i in cubes:
-        if i.tag == "Block" and i.position[1] in to_pop:
+        if i.tag == "Block" and i.position.y in to_pop:
             to_remove.append(i)
     for i in to_remove:
         remove(i)
     for i in sorted(to_pop):
         for j in cubes:
-            if j.tag == "Block" and j.position[1] < i:
-                x = j.position[0]
-                y = j.position[1]
-                j.position = (x, y + 1)
+            if j.tag == "Block" and j.position.y < i:
+                j.position.y += 1

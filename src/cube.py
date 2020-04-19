@@ -1,6 +1,7 @@
 import settings.settings as s
 from utils.window_manager import window
 import pygame
+from utils.dataclasses_ import Position
 
 
 def color_darker(i: tuple, percent: float) -> tuple:
@@ -19,21 +20,21 @@ def color_brighten(i: tuple, percent: float) -> tuple:
 
 class Cube:
     def __init__(
-        self, tag: str, position: tuple = (1, 1), color_tag: str = "Border"
+        self, tag: str, position: Position = Position(), color_tag: str = "Border"
     ) -> None:
         self.color_tag = color_tag
         self.position = position
         self.tag = tag
 
     def draw_shade(self) -> None:
-        x = self.position[0] * s.cell_size * s.scale
-        y = self.position[1] * s.cell_size * s.scale
+        x = self.position.x * s.cell_size * s.scale
+        y = self.position.y * s.cell_size * s.scale
         size = s.cell_size * s.scale
         pygame.draw.rect(window, s.colors["Shade"], (x, y, size, size))
 
     def draw(self) -> None:
-        x = self.position[0] * s.cell_size * s.scale
-        y = self.position[1] * s.cell_size * s.scale
+        x = self.position.x * s.cell_size * s.scale
+        y = self.position.y * s.cell_size * s.scale
         size = s.cell_size * s.scale
         pygame.draw.rect(window, s.colors[self.color_tag], (x, y, size, size))
 

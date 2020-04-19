@@ -3,12 +3,13 @@ import shade
 from cube import Cube
 import settings.settings as s
 import utils.controller as controller
+from utils.dataclasses_ import Position
 
 
 class Tetromino:
     def __init__(self) -> None:
         self.body = []
-        self.pos = (5, 0)
+        self.position = Position(5, 0)
         self.state = 0
         self.one = Cube(tag="Block")
         self.two = Cube(tag="Block")
@@ -99,26 +100,26 @@ class Tetromino:
         :return:  1 if landed, 2 if moved
         """
         for i in self.body:
-            x = i.position[0]
-            y = i.position[1] + 1
+            x = i.position.x
+            y = i.position.y + 1
             for j in well.cubes:
-                if j.position == (x, y):
+                if j.position.x == x and j.position.y == y:
                     self.transfer_to_level()
                     return 1
         for i in self.body:
-            x = i.position[0]
-            y = i.position[1]
-            i.position = x, y + 1
-        self.pos = self.pos[0], self.pos[1] + 1
+            x = i.position.x
+            y = i.position.y
+            i.position.x = x
+            i.position.y = y + 1
+        self.position.y += 1
         return 2
 
     def can_slide(self, direct: int) -> bool:
         for i in self.body:
-            x = i.position[0]
-            x += direct
-            y = i.position[1]
+            x = i.position.x + direct
+            y = i.position.y
             for j in well.cubes:
-                if j.position == (x, y):
+                if j.position.x == x and j.position.y == y:
                     return False
         return True
 
@@ -127,10 +128,8 @@ class Tetromino:
         :param direct: positive if move right, negative if move left
         """
         for i in self.body:
-            x = i.position[0]
-            y = i.position[1]
-            i.position = x + direct, y
-        self.pos = self.pos[0] + direct, self.pos[1]
+            i.position.x += direct
+        self.position.x += direct
 
     def try_rotation(self) -> bool:
         """

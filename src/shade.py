@@ -6,7 +6,8 @@ shade: Tetromino
 
 
 def update_pos(player: Tetromino) -> None:
-    shade.pos = (player.pos[0], player.pos[1])
+    shade.position.x = player.position.x
+    shade.position.y = player.position.y
     if player.state == 0:
         shade.set_0_rotation()
     elif player.state == 1:
@@ -22,18 +23,16 @@ def update_pos(player: Tetromino) -> None:
 
 def move_down():
     for i in shade.body:
-        x = i.position[0]
-        y = i.position[1] + 1
+        x = i.position.x
+        y = i.position.y + 1
         if y > 23:
             return 1
         for j in well.cubes:
-            if j.position == (x, y):
+            if j.position.x == x and j.position.y == y:
                 return 1
     for i in shade.body:
-        x = i.position[0]
-        y = i.position[1]
-        i.position = x, y + 1
-    shade.pos = shade.pos[0], shade.pos[1] + 1
+        i.position.y += 1
+    shade.position.y += 1
 
 
 def draw():
