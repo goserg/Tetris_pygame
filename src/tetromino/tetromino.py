@@ -24,24 +24,27 @@ class Tetromino:
 
     def update(self) -> int:
         """
-
         :returns: 0 if nothing happened; 1 if moved; 2 if landed
         """
         to_draw = 0
         if controller.just_pressed["Left"]:
-            if self.move(-1) == 1:
+            if self.can_slide(-1):
+                self.slide(-1)
                 to_draw = 1
             self.move_timer = s.delayed_auto_shift
         elif controller.pressed["Left"] and self.move_timer < 0:
-            if self.move(-1) == 1:
+            if self.can_slide(-1):
+                self.slide(-1)
                 to_draw = 1
             self.move_timer = s.auto_shift
         if controller.just_pressed["Right"]:
-            if self.move(1) == 1:
+            if self.can_slide(1):
+                self.slide(1)
                 to_draw = 1
             self.move_timer = s.delayed_auto_shift
         elif controller.pressed["Right"] and self.move_timer < 0:
-            if self.move(1) == 1:
+            if self.can_slide(1):
+                self.slide(1)
                 to_draw = 1
             self.move_timer = s.auto_shift
 
@@ -49,15 +52,8 @@ class Tetromino:
             if self.try_rotation():
                 to_draw = 1
             elif s.is_wall_push_enabled:
-                if self.move(1) == 1 and self.try_rotation():
+                if self.wall_rotation():
                     to_draw = 1
-                elif self.move(-1) == 1 and self.try_rotation():
-                    to_draw = 1
-                elif self.body[0].color_tag == "TypeI":
-                    if self.move(1) == 1 and self.move(1) == 1 and self.try_rotation():
-                        to_draw = 1
-                    elif self.move(-1) == 1 and self.move(-1) == 1 and self.try_rotation():
-                        to_draw = 1
         if (
             controller.just_pressed["Down"]
             or (controller.pressed["Down"] and not controller.down_lock)
@@ -76,13 +72,30 @@ class Tetromino:
         self.fall_timer += 1
         return to_draw
 
+    def wall_rotation(self) -> bool:
+        self.rotate()
+        if self.can_slide(1):
+            self.slide(1)
+            return True
+        elif self.can_slide(-1):
+            self.slide(-1)
+            return True
+        if self.body[0].color_tag == "TypeI":
+            if self.can_slide(2):
+                self.slide(2)
+                return True
+            elif self.can_slide(-2):
+                self.slide(-2)
+                return True
+        self.rotate_back()
+        return False
+
     def reset_timers(self) -> None:
         self.move_timer = 0
         self.fall_timer = 0
 
     def move_down(self) -> int:
         """
-
         :return:  1 if landed, 2 if moved
         """
         for i in self.body:
@@ -99,39 +112,38 @@ class Tetromino:
         self.pos = self.pos[0], self.pos[1] + 1
         return 2
 
-    def move(self, direct: int) -> int:
-        """
-
-        :param direct: 1 if move right, -1 if move left
-        :return: 0 if can't move, 1 if moved
-        """
+    def can_slide(self, direct: int) -> bool:
         for i in self.body:
             x = i.position[0]
             x += direct
             y = i.position[1]
             for j in well.cubes:
                 if j.position == (x, y):
-                    return 0
+                    return False
+        return True
+
+    def slide(self, direct: int) -> None:
+        """
+        :param direct: positive if move right, negative if move left
+        """
         for i in self.body:
             x = i.position[0]
             y = i.position[1]
             i.position = x + direct, y
         self.pos = self.pos[0] + direct, self.pos[1]
-        return 1
 
-    def try_rotation(self) -> int:
+    def try_rotation(self) -> bool:
         """
-
-        :return: 0 if can't rotate, 1 if rotated
+        :return: False if can't rotate, True if rotated
         """
         self.rotate()
         for i in well.cubes:
             for j in self.body:
                 if i.position == j.position:
                     self.rotate_back()
-                    return 0
+                    return False
         shade.shade.rotate()
-        return 1
+        return True
 
     def drop(self) -> None:
         while self.move_down() != 1:

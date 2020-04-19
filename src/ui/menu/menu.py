@@ -66,8 +66,7 @@ class Menu:
             controller.just_pressed["Clear"]
             and self.state != MenuState.MAIN
             and not (
-                self.state == MenuState.START
-                and self.start_menu.name_input_enabled
+                self.state == MenuState.START and self.start_menu.name_input_enabled
             )
         ):
             self.state = MenuState.MAIN

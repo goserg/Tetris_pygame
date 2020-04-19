@@ -95,7 +95,7 @@ class Game:
 
             self.draw()
             self.clock.tick(s.fps_cap)
-            self.fps = int(1/(time() - start))
+            self.fps = int(1 / (time() - start))
 
     def update_menu_screen(self) -> None:
         status = self.menu.update()
@@ -145,6 +145,7 @@ class Game:
             for j in well.cubes:
                 if i.position == j.position:
                     return True
+        return False
 
     def save_score(self):
         if score_list.is_enough(stats.score.score):

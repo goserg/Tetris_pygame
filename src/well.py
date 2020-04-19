@@ -1,5 +1,6 @@
 from cube import Cube
 import stats.score
+from typing import Dict
 
 cubes = []
 lines_cleared = 0
@@ -20,7 +21,7 @@ def draw() -> None:
 
 
 def check_line() -> list:
-    places = {}
+    places: Dict[int, int] = {}
     for i in cubes:
         if i.tag == "Block":
             if i.position[1] in places.keys():

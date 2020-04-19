@@ -139,8 +139,11 @@ class TypeO(Tetromino):
         self.three.position = (x + 1, y)
         self.four.position = (x + 1, y + 1)
 
-    def try_rotation(self) -> int:
-        return 0
+    def try_rotation(self) -> bool:
+        return False
+
+    def wall_rotation(self) -> bool:
+        return False
 
 
 class TypeS(Tetromino):
