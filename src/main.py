@@ -122,18 +122,15 @@ class Game:
         if controller.just_pressed["Pause"]:
             self.to_draw = True
             self.state = GameState.PAUSE
-        p_event = self.player.update()
-        if p_event == 1:  # Player moved
+        self.player.update()
+        if self.player.moved:
+            shade.update_pos(self.player)
             self.to_draw = True
-        elif p_event == 2:  # Player landed
-            self.to_draw = True
+        if self.player.landed:
             self.create_new_player()
             if self.is_game_over():
                 self.state = GameState.GAME_OVER
                 self.save_score()
-                return
-        if self.player and p_event:
-            shade.update_pos(self.player)
 
     def update_pause_screen(self) -> None:
         if controller.just_pressed["Pause"]:

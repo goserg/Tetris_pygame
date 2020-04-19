@@ -143,7 +143,7 @@ class TypeO(Tetromino):
     def try_rotation(self) -> bool:
         return False
 
-    def wall_rotation(self) -> bool:
+    def wall_push_rotation(self) -> bool:
         return False
 
 

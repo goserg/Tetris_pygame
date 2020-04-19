@@ -23,57 +23,62 @@ class Tetromino:
         self.move_timer = 0
         self.fall_timer = 0
 
-    def update(self) -> int:
-        """
-        :returns: 0 if nothing happened; 1 if moved; 2 if landed
-        """
-        to_draw = 0
+        self.moved = False
+        self.landed = False
+
+    def update(self) -> None:
+        self.moved = False
         if controller.just_pressed["Left"]:
             if self.can_slide(-1):
                 self.slide(-1)
-                to_draw = 1
+                self.moved = True
             self.move_timer = s.delayed_auto_shift
         elif controller.pressed["Left"] and self.move_timer < 0:
             if self.can_slide(-1):
                 self.slide(-1)
-                to_draw = 1
+                self.moved = True
             self.move_timer = s.auto_shift
         if controller.just_pressed["Right"]:
             if self.can_slide(1):
                 self.slide(1)
-                to_draw = 1
+                self.moved = True
             self.move_timer = s.delayed_auto_shift
         elif controller.pressed["Right"] and self.move_timer < 0:
             if self.can_slide(1):
                 self.slide(1)
-                to_draw = 1
+                self.moved = True
             self.move_timer = s.auto_shift
 
         if controller.just_pressed["Rotate"]:
             if self.try_rotation():
-                to_draw = 1
+                self.moved = True
             elif s.is_wall_push_enabled:
-                if self.wall_rotation():
-                    to_draw = 1
+                if self.wall_push_rotation():
+                    self.moved = True
         if (
             controller.just_pressed["Down"]
             or (controller.pressed["Down"] and not controller.down_lock)
         ) or self.fall_timer > s.speed:
+            self.moved = True
+            if not self.can_move_down():
+                self.transfer_to_level()
+                well.clear_lines()
+                controller.down_lock = True
+                self.landed = True
+                return
+            self.move_down()
             controller.down_lock = False
             self.fall_timer = 0
-            if self.move_down() == 1:
-                controller.down_lock = True
-                return 2
-            to_draw = 1
-        if s.drop_enabled and controller.just_pressed["Drop"]:
+        elif s.drop_enabled and controller.just_pressed["Drop"]:
             self.fall_timer = 0
             self.drop()
-            return 2
+            self.landed = True
+            self.moved = True
+            return
         self.move_timer -= 1
         self.fall_timer += 1
-        return to_draw
 
-    def wall_rotation(self) -> bool:
+    def wall_push_rotation(self) -> bool:
         self.rotate()
         if self.can_slide(1):
             self.slide(1)
@@ -95,24 +100,20 @@ class Tetromino:
         self.move_timer = 0
         self.fall_timer = 0
 
-    def move_down(self) -> int:
-        """
-        :return:  1 if landed, 2 if moved
-        """
+    def can_move_down(self) -> bool:
         for i in self.body:
             x = i.position.x
             y = i.position.y + 1
             for j in well.cubes:
                 if j.position.x == x and j.position.y == y:
-                    self.transfer_to_level()
-                    return 1
+                    return False
+        return True
+
+    def move_down(self) -> None:
         for i in self.body:
-            x = i.position.x
             y = i.position.y
-            i.position.x = x
             i.position.y = y + 1
         self.position.y += 1
-        return 2
 
     def can_slide(self, direct: int) -> bool:
         for i in self.body:
@@ -145,14 +146,12 @@ class Tetromino:
         return True
 
     def drop(self) -> None:
-        while self.move_down() != 1:
-            pass
+        while self.can_move_down():
+            self.move_down()
 
     def transfer_to_level(self) -> None:
         for cube in self.body:
             well.add(cube)
-        well.clear_lines()
-        self.__init__()
 
     def rotate(self) -> None:
         if self.state == 0:
