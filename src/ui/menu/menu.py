@@ -4,7 +4,7 @@ from ui.button import Button
 from ui.text import Text
 from enum import Enum
 import utils.controller as controller
-import settings.settings as s
+import data.settings as s
 import stats.high_score as high_score
 from ui.menu.start_menu import StartMenu
 
@@ -25,7 +25,7 @@ class Menu:
                 "PLAY",
                 self.ButtonPos.PLAY.value,
                 50,
-                s.win_w * s.scale / 2,
+                s.WIN_W * s.scale / 2,
                 130 * s.scale,
                 window,
             )
@@ -35,7 +35,7 @@ class Menu:
                 "SCORE",
                 self.ButtonPos.SCORE.value,
                 30,
-                s.win_w * s.scale / 2,
+                s.WIN_W * s.scale / 2,
                 200 * s.scale,
                 window,
             )
@@ -45,7 +45,7 @@ class Menu:
                 "QUIT",
                 self.ButtonPos.QUIT.value,
                 30,
-                s.win_w * s.scale / 2,
+                s.WIN_W * s.scale / 2,
                 250 * s.scale,
                 window,
             )
@@ -92,9 +92,9 @@ class Menu:
     def update_score(self) -> None:
         self.score_screen = []
         self.score_screen.append(
-            Text("High scores:", (200, 200, 200), 30, s.win_w / 2, 50)
+            Text("High scores:", (200, 200, 200), 30, s.WIN_W / 2, 50)
         )
-        for i, score in enumerate(high_score.table.score_list):
+        for i, score in enumerate(high_score.score_list.score_list):
             self.score_screen.append(
                 Text(
                     (score[0] + ": " + str(score[1]))
@@ -102,7 +102,7 @@ class Menu:
                     else "...vacant...",
                     (200, 200, 200),
                     20,
-                    s.win_w / 2,
+                    s.WIN_W / 2,
                     100 + (i + 1) * 30,
                 )
             )

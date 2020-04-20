@@ -1,8 +1,9 @@
-import settings.settings as s
-import settings.colors as colors
+import data.settings as s
+import data.colors as colors
 from ui.ui import ui
+import t_draw
 
-LEVELS = [
+LEVEL_SPEEDS = [
     48,
     43,
     38,
@@ -41,9 +42,10 @@ level = 0
 def reset() -> None:
     global level
     level = 0
-    s.speed = LEVELS[level]
+    s.speed = LEVEL_SPEEDS[level]
     ui.level_block.lst[1].text = str(level)
-    s.colors = colors.level_1
+    s.color_scheme = colors.level_1
+    t_draw.compute_colors(s.color_scheme)
 
 
 def set_level(lines: int) -> None:
@@ -51,21 +53,22 @@ def set_level(lines: int) -> None:
     if level > lines // 10:
         return
     level = lines // 10
-    if level < len(LEVELS):
-        s.speed = LEVELS[level]
+    if level < len(LEVEL_SPEEDS):
+        s.speed = LEVEL_SPEEDS[level]
     else:
-        s.speed = LEVELS[-1]
-    color_change()
+        s.speed = LEVEL_SPEEDS[-1]
+    color_scheme_update()
+    t_draw.compute_colors(s.color_scheme)
     ui.level_block.lst[1].text = str(level)
 
 
-def color_change() -> None:
+def color_scheme_update() -> None:
     n = level % 4
     if n == 0:
-        s.colors = colors.level_1
+        s.color_scheme = colors.level_1
     elif n == 1:
-        s.colors = colors.level_2
+        s.color_scheme = colors.level_2
     elif n == 2:
-        s.colors = colors.level_3
+        s.color_scheme = colors.level_3
     else:
-        s.colors = colors.level_4
+        s.color_scheme = colors.level_4

@@ -1,7 +1,7 @@
 from ui.text import Text
 from ui.ui_block import UIBlock
 from ui.menu.name_input import NameInput
-import settings.settings as s
+import data.settings as s
 from utils.fsm import GameState
 
 
@@ -19,9 +19,9 @@ class UI:
         self.level_block.add(Text("level", self.text_color, 20, 0, 0))
         self.level_block.add(Text("0", self.text_color, 20, 0, 0))
 
-        self.pause = Text("PAUSE", (255, 255, 255), 20, s.game_w // 2, s.game_h // 2)
+        self.pause = Text("PAUSE", (255, 255, 255), 20, s.GAME_W // 2, s.GAME_H // 2)
         self.game_over = Text(
-            "GAME OVER", (255, 255, 255), 20, s.game_w // 2, s.game_h // 2
+            "GAME OVER", (255, 255, 255), 20, s.GAME_W // 2, s.GAME_H // 2
         )
 
         self.score_plate = NameInput()

@@ -1,9 +1,10 @@
 import well
 import shade
-from cube import Cube
-import settings.settings as s
+from utils.dataclasses_ import Cube
+import data.settings as s
 import utils.controller as controller
 from utils.dataclasses_ import Position
+import t_draw
 
 
 class Tetromino:
@@ -11,17 +12,17 @@ class Tetromino:
         self.body = []
         self.position = Position(5, 0)
         self.state = 0
-        self.one = Cube(tag="Block")
-        self.two = Cube(tag="Block")
-        self.three = Cube(tag="Block")
-        self.four = Cube(tag="Block")
-        self.body.append(self.one)
-        self.body.append(self.two)
-        self.body.append(self.three)
-        self.body.append(self.four)
+        self._one = Cube()
+        self._two = Cube()
+        self._three = Cube()
+        self._four = Cube()
+        self.body.append(self._one)
+        self.body.append(self._two)
+        self.body.append(self._three)
+        self.body.append(self._four)
 
-        self.move_timer = 0
-        self.fall_timer = 0
+        self._move_timer = 0
+        self._fall_timer = 0
 
         self.moved = False
         self.landed = False
@@ -29,102 +30,86 @@ class Tetromino:
     def update(self) -> None:
         self.moved = False
         if controller.just_pressed["Left"]:
-            if self.can_slide(-1):
-                self.slide(-1)
+            if self._can_slide(-1):
+                self._slide(-1)
                 self.moved = True
-            self.move_timer = s.delayed_auto_shift
-        elif controller.pressed["Left"] and self.move_timer < 0:
-            if self.can_slide(-1):
-                self.slide(-1)
+            self._move_timer = s.DELAYED_AUTO_SHIFT
+        elif controller.pressed["Left"] and self._move_timer < 0:
+            if self._can_slide(-1):
+                self._slide(-1)
                 self.moved = True
-            self.move_timer = s.auto_shift
+            self._move_timer = s.AUTO_SHIFT
         if controller.just_pressed["Right"]:
-            if self.can_slide(1):
-                self.slide(1)
+            if self._can_slide(1):
+                self._slide(1)
                 self.moved = True
-            self.move_timer = s.delayed_auto_shift
-        elif controller.pressed["Right"] and self.move_timer < 0:
-            if self.can_slide(1):
-                self.slide(1)
+            self._move_timer = s.DELAYED_AUTO_SHIFT
+        elif controller.pressed["Right"] and self._move_timer < 0:
+            if self._can_slide(1):
+                self._slide(1)
                 self.moved = True
-            self.move_timer = s.auto_shift
+            self._move_timer = s.AUTO_SHIFT
 
         if controller.just_pressed["Rotate"]:
-            if self.try_rotation():
+            if self._try_rotation():
                 self.moved = True
             elif s.is_wall_push_enabled:
-                if self.wall_push_rotation():
+                if self._wall_push_rotation():
                     self.moved = True
         if (
             controller.just_pressed["Down"]
             or (controller.pressed["Down"] and not controller.down_lock)
-        ) or self.fall_timer > s.speed:
+        ) or self._fall_timer > s.speed:
             self.moved = True
-            if not self.can_move_down():
-                self.transfer_to_level()
+            if not self._can_move_down():
+                self._transfer_to_level()
                 well.clear_lines()
                 controller.down_lock = True
                 self.landed = True
                 return
-            self.move_down()
+            self._move_down()
             controller.down_lock = False
-            self.fall_timer = 0
+            self._fall_timer = 0
         elif s.drop_enabled and controller.just_pressed["Drop"]:
-            self.fall_timer = 0
-            self.drop()
+            self._fall_timer = 0
+            self._drop()
             self.landed = True
             self.moved = True
             return
-        self.move_timer -= 1
-        self.fall_timer += 1
-
-    def wall_push_rotation(self) -> bool:
-        self.rotate()
-        if self.can_slide(1):
-            self.slide(1)
-            return True
-        elif self.can_slide(-1):
-            self.slide(-1)
-            return True
-        if self.body[0].color_tag == "TypeI":
-            if self.can_slide(2):
-                self.slide(2)
-                return True
-            elif self.can_slide(-2):
-                self.slide(-2)
-                return True
-        self.rotate_back()
-        return False
+        self._move_timer -= 1
+        self._fall_timer += 1
 
     def reset_timers(self) -> None:
-        self.move_timer = 0
-        self.fall_timer = 0
+        self._move_timer = 0
+        self._fall_timer = 0
 
-    def can_move_down(self) -> bool:
+    def _can_move_down(self) -> bool:
         for i in self.body:
             x = i.position.x
             y = i.position.y + 1
-            for j in well.cubes:
-                if j.position.x == x and j.position.y == y:
-                    return False
+            if y >= len(well.well) - 1:
+                return False
+            if well.well[y][x - 1]:
+                return False
         return True
 
-    def move_down(self) -> None:
+    def _move_down(self) -> None:
         for i in self.body:
             y = i.position.y
             i.position.y = y + 1
         self.position.y += 1
 
-    def can_slide(self, direct: int) -> bool:
+    def _can_slide(self, direct: int) -> bool:
         for i in self.body:
             x = i.position.x + direct
             y = i.position.y
-            for j in well.cubes:
-                if j.position.x == x and j.position.y == y:
-                    return False
+            if x <= 0 or x > len(well.well[0]):
+                return False
+            if well.well[y][x - 1]:
+                return False
         return True
 
-    def slide(self, direct: int) -> None:
+    def _slide(self, direct: int) -> None:
         """
         :param direct: positive if move right, negative if move left
         """
@@ -132,28 +117,53 @@ class Tetromino:
             i.position.x += direct
         self.position.x += direct
 
-    def try_rotation(self) -> bool:
+    def _try_rotation(self) -> bool:
         """
         :return: False if can't rotate, True if rotated
         """
-        self.rotate()
-        for i in well.cubes:
-            for j in self.body:
-                if i.position == j.position:
-                    self.rotate_back()
-                    return False
-        shade.shade.rotate()
+        self._rotate()
+        for i in self.body:
+            x = i.position.x
+            y = i.position.y
+            if y >= len(well.well) - 1:
+                self._rotate_back()
+                return False
+            if x <= 0 or x > len(well.well[0]):
+                self._rotate_back()
+                return False
+            if well.well[y][x - 1]:
+                self._rotate_back()
+                return False
+        shade.shade._rotate()
         return True
 
-    def drop(self) -> None:
-        while self.can_move_down():
-            self.move_down()
+    def _wall_push_rotation(self) -> bool:
+        self._rotate()
+        if self._can_slide(1):
+            self._slide(1)
+            return True
+        elif self._can_slide(-1):
+            self._slide(-1)
+            return True
+        if self.body[0].color_tag == "TypeI":
+            if self._can_slide(2):
+                self._slide(2)
+                return True
+            elif self._can_slide(-2):
+                self._slide(-2)
+                return True
+        self._rotate_back()
+        return False
 
-    def transfer_to_level(self) -> None:
+    def _drop(self) -> None:
+        while self._can_move_down():
+            self._move_down()
+
+    def _transfer_to_level(self) -> None:
         for cube in self.body:
             well.add(cube)
 
-    def rotate(self) -> None:
+    def _rotate(self) -> None:
         if self.state == 0:
             self.state = 1
             self.set_1_rotation()
@@ -167,7 +177,7 @@ class Tetromino:
             self.state = 0
             self.set_0_rotation()
 
-    def rotate_back(self) -> None:
+    def _rotate_back(self) -> None:
         if self.state == 0:
             self.state = 3
             self.set_3_rotation()
@@ -195,4 +205,6 @@ class Tetromino:
 
     def draw(self) -> None:
         for i in self.body:
-            i.draw()
+            t_draw.cube(
+                i.position.x * s.CELL_SIZE, i.position.y * s.CELL_SIZE, i.color_tag
+            )

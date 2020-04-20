@@ -13,34 +13,34 @@ class TypeI(Tetromino):
     def set_0_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y + 1)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 2, y + 1)
-        self.four.position = Position(x + 3, y + 1)
+        self._one.position = Position(x, y + 1)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 2, y + 1)
+        self._four.position = Position(x + 3, y + 1)
 
     def set_1_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 2, y)
-        self.two.position = Position(x + 2, y + 1)
-        self.three.position = Position(x + 2, y + 2)
-        self.four.position = Position(x + 2, y + 3)
+        self._one.position = Position(x + 2, y)
+        self._two.position = Position(x + 2, y + 1)
+        self._three.position = Position(x + 2, y + 2)
+        self._four.position = Position(x + 2, y + 3)
 
     def set_2_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y + 2)
-        self.two.position = Position(x + 1, y + 2)
-        self.three.position = Position(x + 2, y + 2)
-        self.four.position = Position(x + 3, y + 2)
+        self._one.position = Position(x, y + 2)
+        self._two.position = Position(x + 1, y + 2)
+        self._three.position = Position(x + 2, y + 2)
+        self._four.position = Position(x + 3, y + 2)
 
     def set_3_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 1, y + 2)
-        self.four.position = Position(x + 1, y + 3)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 1, y + 2)
+        self._four.position = Position(x + 1, y + 3)
 
 
 class TypeJ(Tetromino):
@@ -54,34 +54,34 @@ class TypeJ(Tetromino):
     def set_0_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y + 1)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 2, y + 1)
-        self.four.position = Position(x + 2, y + 2)
+        self._one.position = Position(x, y + 1)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 2, y + 1)
+        self._four.position = Position(x + 2, y + 2)
 
     def set_1_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x, y + 2)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x, y + 2)
+        self._four.position = Position(x + 1, y + 2)
 
     def set_2_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y)
-        self.two.position = Position(x, y + 1)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 2, y + 1)
+        self._one.position = Position(x, y)
+        self._two.position = Position(x, y + 1)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 2, y + 1)
 
     def set_3_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x + 2, y)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x + 2, y)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 1, y + 2)
 
 
 class TypeL(Tetromino):
@@ -95,34 +95,34 @@ class TypeL(Tetromino):
     def set_0_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y + 1)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 2, y + 1)
-        self.four.position = Position(x, y + 2)
+        self._one.position = Position(x, y + 1)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 2, y + 1)
+        self._four.position = Position(x, y + 2)
 
     def set_1_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y)
-        self.two.position = Position(x + 1, y)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x, y)
+        self._two.position = Position(x + 1, y)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 1, y + 2)
 
     def set_2_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 2, y)
-        self.two.position = Position(x, y + 1)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 2, y + 1)
+        self._one.position = Position(x + 2, y)
+        self._two.position = Position(x, y + 1)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 2, y + 1)
 
     def set_3_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 1, y + 2)
-        self.four.position = Position(x + 2, y + 2)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 1, y + 2)
+        self._four.position = Position(x + 2, y + 2)
 
 
 class TypeO(Tetromino):
@@ -135,15 +135,15 @@ class TypeO(Tetromino):
     def set_0_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y)
-        self.two.position = Position(x, y + 1)
-        self.three.position = Position(x + 1, y)
-        self.four.position = Position(x + 1, y + 1)
+        self._one.position = Position(x, y)
+        self._two.position = Position(x, y + 1)
+        self._three.position = Position(x + 1, y)
+        self._four.position = Position(x + 1, y + 1)
 
-    def try_rotation(self) -> bool:
+    def _try_rotation(self) -> bool:
         return False
 
-    def wall_push_rotation(self) -> bool:
+    def _wall_push_rotation(self) -> bool:
         return False
 
 
@@ -157,34 +157,34 @@ class TypeS(Tetromino):
     def set_0_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x + 2, y)
-        self.three.position = Position(x, y + 1)
-        self.four.position = Position(x + 1, y + 1)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x + 2, y)
+        self._three.position = Position(x, y + 1)
+        self._four.position = Position(x + 1, y + 1)
 
     def set_1_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 2, y + 1)
-        self.four.position = Position(x + 2, y + 2)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 2, y + 1)
+        self._four.position = Position(x + 2, y + 2)
 
     def set_2_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y + 1)
-        self.two.position = Position(x + 2, y + 1)
-        self.three.position = Position(x, y + 2)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x + 1, y + 1)
+        self._two.position = Position(x + 2, y + 1)
+        self._three.position = Position(x, y + 2)
+        self._four.position = Position(x + 1, y + 2)
 
     def set_3_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y)
-        self.two.position = Position(x, y + 1)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x, y)
+        self._two.position = Position(x, y + 1)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 1, y + 2)
 
 
 class TypeT(Tetromino):
@@ -198,34 +198,34 @@ class TypeT(Tetromino):
     def set_0_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y + 1)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 2, y + 1)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x, y + 1)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 2, y + 1)
+        self._four.position = Position(x + 1, y + 2)
 
     def set_1_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x, y + 1)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x, y + 1)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 1, y + 2)
 
     def set_2_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x, y + 1)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 2, y + 1)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x, y + 1)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 2, y + 1)
 
     def set_3_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 2, y + 1)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 2, y + 1)
+        self._four.position = Position(x + 1, y + 2)
 
 
 class TypeZ(Tetromino):
@@ -238,31 +238,31 @@ class TypeZ(Tetromino):
     def set_0_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y)
-        self.two.position = Position(x + 1, y)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x + 2, y + 1)
+        self._one.position = Position(x, y)
+        self._two.position = Position(x + 1, y)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x + 2, y + 1)
 
     def set_1_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 2, y)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 2, y + 1)
-        self.four.position = Position(x + 1, y + 2)
+        self._one.position = Position(x + 2, y)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 2, y + 1)
+        self._four.position = Position(x + 1, y + 2)
 
     def set_2_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x, y + 1)
-        self.two.position = Position(x + 1, y + 1)
-        self.three.position = Position(x + 1, y + 2)
-        self.four.position = Position(x + 2, y + 2)
+        self._one.position = Position(x, y + 1)
+        self._two.position = Position(x + 1, y + 1)
+        self._three.position = Position(x + 1, y + 2)
+        self._four.position = Position(x + 2, y + 2)
 
     def set_3_rotation(self) -> None:
         x = self.position.x
         y = self.position.y
-        self.one.position = Position(x + 1, y)
-        self.two.position = Position(x, y + 1)
-        self.three.position = Position(x + 1, y + 1)
-        self.four.position = Position(x, y + 2)
+        self._one.position = Position(x + 1, y)
+        self._two.position = Position(x, y + 1)
+        self._three.position = Position(x + 1, y + 1)
+        self._four.position = Position(x, y + 2)

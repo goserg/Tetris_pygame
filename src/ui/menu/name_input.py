@@ -1,6 +1,6 @@
 from ui.button import Button
 from ui.text import Text
-import settings.settings as s
+import data.settings as s
 from utils.window_manager import window
 import utils.controller as controller
 import pygame
@@ -18,23 +18,23 @@ class NameInput:
         self.plate = pygame.Surface((300 * s.scale, 300 * s.scale))
 
         self.game_over = Text(
-            "Name change", (255, 255, 255), 30, s.win_w // 2, s.win_h // 4
+            "Name change", (255, 255, 255), 30, s.WIN_W // 2, s.WIN_H // 4
         )
         self.name_text = Text(
-            self.name, (255, 255, 255), 30, s.win_w // 2, s.win_h * 2 // 4
+            self.name, (255, 255, 255), 30, s.WIN_W // 2, s.WIN_H * 2 // 4
         )
         self.press_a_btn = Text(
-            "A to select letter", (255, 255, 255), 15, s.win_w // 2, s.win_h * 3 // 4
+            "A to select letter", (255, 255, 255), 15, s.WIN_W // 2, s.WIN_H * 3 // 4
         )
         self.press_start_btn = Text(
-            "Start to confirm", (255, 255, 255), 15, s.win_w // 2, s.win_h * 3 // 4 + 15
+            "Start to confirm", (255, 255, 255), 15, s.WIN_W // 2, s.WIN_H * 3 // 4 + 15
         )
         self.press_b_btn = Text(
             "B to clear letter",
             (255, 255, 255),
             15,
-            s.win_w // 2,
-            s.win_h * 3 // 4 + 30,
+            s.WIN_W // 2,
+            s.WIN_H * 3 // 4 + 30,
         )
         x0 = 0
         y0 = 0
@@ -65,7 +65,7 @@ class NameInput:
             i.draw(self.letter)
 
         surf_rect = self.plate.get_rect()
-        surf_rect.center = (s.win_w * s.scale / 2, s.win_h * s.scale / 2)
+        surf_rect.center = (s.WIN_W * s.scale / 2, s.WIN_H * s.scale / 2)
         window.blit(self.plate, surf_rect)
 
         self.game_over.draw()
@@ -85,7 +85,7 @@ class NameInput:
             return 0
         if direction == (0, 0):
             return 0
-        self.move_timer = s.auto_shift
+        self.move_timer = s.AUTO_SHIFT
         index = LETTERS.index(self.letter) + direction[0]
         if index < 0:
             index = len(LETTERS) - 1

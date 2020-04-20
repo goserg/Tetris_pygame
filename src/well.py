@@ -1,53 +1,40 @@
-from cube import Cube
+import data.settings as s
+from utils.dataclasses_ import Cube
 import stats.score
-from typing import Dict, List
+from typing import List, Optional
+import t_draw
 
-cubes: List[Cube] = []
+
+well: List[List[Optional[str]]] = [
+    [None for _ in range(s.COLUMNS)] for _ in range(s.ROWS)
+]
+border: List[Cube] = []
 lines_cleared = 0
 
 
 def add(c: Cube) -> None:
-    if c not in cubes:
-        cubes.append(c)
+    well[int(c.position.y)][int(c.position.x) - 1] = c.color_tag
 
 
-def remove(c: Cube) -> None:
-    cubes.remove(c)
+def clear() -> None:
+    global well
+    well = [[None for _ in range(s.COLUMNS)] for _ in range(s.ROWS)]
 
 
 def draw() -> None:
-    for i in cubes:
-        i.draw()
-
-
-def check_line() -> list:
-    places: Dict[float, float] = {}
-    for i in cubes:
-        if i.tag == "Block":
-            if i.position.y in places.keys():
-                places[i.position.y] += 1
-            else:
-                places[i.position.y] = 1
-    to_pop: List[float] = []
-    for key, value in places.items():
-        if value == 10:
-            to_pop.append(key)
-    return to_pop
+    for i in border:
+        t_draw.cube(i.position.x * s.CELL_SIZE, i.position.y * s.CELL_SIZE, i.color_tag)
+    for i, col in enumerate(well):
+        for j, cube in enumerate(col):
+            if cube:
+                t_draw.cube((j + 1) * s.CELL_SIZE, i * s.CELL_SIZE, cube)
 
 
 def clear_lines() -> None:
-    to_pop = check_line()
-    global lines_cleared
-    stats.score.add(len(to_pop))
-    to_remove = []
-    if not to_pop:
-        return
-    for i in cubes:
-        if i.tag == "Block" and i.position.y in to_pop:
-            to_remove.append(i)
-    for i in to_remove:
-        remove(i)
-    for i in sorted(to_pop):
-        for j in cubes:
-            if j.tag == "Block" and j.position.y < i:
-                j.position.y += 1
+    lines = 0
+    for i, row in enumerate(well):
+        if None not in row:
+            well.pop(i)
+            well.insert(0, [None for _ in range(s.COLUMNS)])
+            lines += 1
+    stats.score.add(lines)

@@ -123,17 +123,13 @@ def get_keys() -> None:
 
 def get_direction() -> tuple:
     joy_direct = gamepad.get_hat()
-    if keys[pygame.K_DOWN] or joy_direct == (0, 1):
-        return 0, 1
-    elif keys[pygame.K_UP] or joy_direct == (0, -1):
+    if keys[pygame.K_DOWN] or joy_direct == (0, -1):
         return 0, -1
+    elif keys[pygame.K_UP] or joy_direct == (0, 1):
+        return 0, 1
     elif keys[pygame.K_RIGHT] or joy_direct == (1, 0):
         return 1, 0
     elif keys[pygame.K_LEFT] or joy_direct == (-1, 0):
         return -1, 0
     else:
         return 0, 0
-
-
-def is_Y_pressed():
-    return gamepad.is_Y_pressed()

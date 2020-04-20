@@ -1,5 +1,7 @@
 import well
+import data.settings as s
 from tetromino.tetromino import Tetromino
+import t_draw
 
 
 shade: Tetromino
@@ -25,11 +27,10 @@ def move_down():
     for i in shade.body:
         x = i.position.x
         y = i.position.y + 1
-        if y > 23:
+        if y >= len(well.well) - 1:
             return 1
-        for j in well.cubes:
-            if j.position.x == x and j.position.y == y:
-                return 1
+        if well.well[y][x - 1]:
+            return 1
     for i in shade.body:
         i.position.y += 1
     shade.position.y += 1
@@ -37,4 +38,4 @@ def move_down():
 
 def draw():
     for i in shade.body:
-        i.draw_shade()
+        t_draw.shade(i.position.x * s.CELL_SIZE, i.position.y * s.CELL_SIZE)

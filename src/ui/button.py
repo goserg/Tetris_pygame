@@ -1,4 +1,4 @@
-import settings.settings as s
+import data.settings as s
 import pygame
 
 
@@ -32,7 +32,7 @@ class Button:
             self.color = (100, 100, 100)
             self.plate.fill((0, 0, 0))
         size = int(self.font_size * s.scale)
-        font = pygame.font.SysFont(s.font, size)
+        font = pygame.font.SysFont(s.FONT, size)
         text_surf = font.render(self.text, True, self.color)
         text_rect = text_surf.get_rect()
         text_rect.center = (self.plate.get_width() // 2, self.plate.get_height() // 2)

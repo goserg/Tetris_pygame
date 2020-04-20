@@ -1,21 +1,28 @@
-import settings.settings as s
+import pygame
+import utils.window_manager
+import data.settings as s
 import utils.controller as controller
-from utils.window_manager import window
+from utils.gamepad_controller import GamepadController
 from grid import Grid
 from border import Border
 import well
-import pygame
-from utils.gamepad_controller import GamepadController
 import shade
 import next_indicator
+import stats
 from ui.ui import ui
-import stats.score
-import stats.level
 from utils.fsm import GameState
 from ui.menu.menu import Menu
 from ui.menu.start_menu import StartMenu
-from stats.high_score import table as score_list
 from time import time
+
+
+def reset_game() -> None:
+    well.clear()
+    stats.score.clear()
+    well.lines_cleared = 0
+    ui.lines_cleared_block.lst[1].text = "0"
+    ui.score_block.lst[1].text = "0"
+    s.speed = 48
 
 
 class Game:
@@ -44,15 +51,6 @@ class Game:
 
         self.fps = 0
 
-    def reset_game(self) -> None:
-        well.cubes.clear()
-        self.border = Border()
-        stats.score.clear()
-        well.lines_cleared = 0
-        ui.lines_cleared_block.lst[1].text = "0"
-        ui.score_block.lst[1].text = "0"
-        s.speed = 48
-
     def create_new_player(self) -> None:
         self.player = type(next_indicator.next_one)()
         shade.shade = type(self.player)()
@@ -62,7 +60,7 @@ class Game:
     def draw(self) -> None:
         if self.to_draw:
             self.to_draw = False
-            window.fill(s.colors["Background"])
+            utils.window_manager.window.fill(s.color_scheme["Background"])
             if (
                 self.state == GameState.PLAY
                 or self.state == GameState.PAUSE
@@ -70,7 +68,7 @@ class Game:
             ):
                 shade.draw()
                 self.player.draw()
-                next_indicator.next_one.draw()
+                next_indicator.draw()
                 well.draw()
                 ui.draw(self.state)
                 if s.grid_enabled:
@@ -94,7 +92,7 @@ class Game:
             self.update_action_depending_on_state[self.state]()
 
             self.draw()
-            self.clock.tick(s.fps_cap)
+            self.clock.tick(s.FPS_CAP)
             self.fps = int(1 / (time() - start))
 
     def update_menu_screen(self) -> None:
@@ -113,7 +111,7 @@ class Game:
         if controller.just_pressed["Start"] or controller.just_pressed["Pause"]:
             self.to_draw = True
             self.state = GameState.MENU
-            self.reset_game()
+            reset_game()
             next_indicator.change()
             self.create_new_player()
 
@@ -139,14 +137,17 @@ class Game:
 
     def is_game_over(self) -> bool:
         for i in self.player.body:
-            for j in well.cubes:
-                if i.position == j.position:
-                    return True
+            x = i.position.x
+            y = i.position.y
+            if well.well[y][x - 1]:
+                return True
         return False
 
     def save_score(self):
-        if score_list.is_enough(stats.score.score):
-            score_list.add_score(stats.score.player_name, stats.score.score)
+        if stats.high_score.score_list.is_enough(stats.score.score):
+            stats.high_score.score_list.add_score(
+                stats.score.player_name, stats.score.score
+            )
             self.menu.update_score()
 
 

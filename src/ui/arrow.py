@@ -1,6 +1,6 @@
 from utils.window_manager import window
 import utils.controller as controller
-import settings.settings as s
+import data.settings as s
 import pygame
 
 

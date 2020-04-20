@@ -35,14 +35,14 @@ class _HighScore:
 
 def _save_file() -> None:
     with open(_save_dir + _file_name, "wb") as fw:
-        pickle.dump(table, fw)
+        pickle.dump(score_list, fw)
     print("save file changed")
 
 
 if not os.path.isfile(_save_dir + _file_name):
     if not os.path.exists(_save_dir):
         os.makedirs(_save_dir)
-    table = _HighScore()
+    score_list = _HighScore()
 else:
     with open(_save_dir + _file_name, "rb") as fr:
-        table = pickle.load(fr)
+        score_list = pickle.load(fr)

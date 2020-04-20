@@ -2,7 +2,7 @@ import stats.high_score as save
 import utils.controller as controller
 from ui.text import Text
 import stats.score
-import settings.settings as s
+import data.settings as s
 
 from ui.switcher_button import SwitcherButton
 
@@ -14,21 +14,22 @@ import stats.level
 class StartMenu:
     def __init__(self) -> None:
         self.move_timer = 0
-        self.text = Text("select player", (200, 200, 200), 30, s.win_w / 2, 50)
+        self.text = Text("select player", (200, 200, 200), 30, s.WIN_W / 2, 50)
         self.text2 = Text(
-            "Y to change current player name", (200, 200, 200), 15, s.win_w / 2, 75
+            "Start to change current player name", (200, 200, 200), 15, s.WIN_W / 2, 75
         )
+        self.text3 = Text("A to play", (200, 200, 200), 15, s.WIN_W / 2, 95)
 
         self.name_input = NameInput()
         self.name_input_enabled = False
 
         self.player_button = SwitcherButton(
-            save.table.players,
+            save.score_list.players,
             0,
             (200, 200, 200),
             20,
-            s.win_w / 4 + 20,
-            s.win_h / 2,
+            s.WIN_W / 4 + 20,
+            s.WIN_H / 2,
             horizontal=True,
         )
         self.level_button = SwitcherButton(
@@ -36,8 +37,8 @@ class StartMenu:
             0,
             (200, 200, 200),
             20,
-            s.win_w * 3 / 4,
-            s.win_h / 2,
+            s.WIN_W * 3 / 4,
+            s.WIN_H / 2,
             horizontal=False,
         )
 
@@ -52,14 +53,14 @@ class StartMenu:
         if self.name_input_enabled:
             if controller.just_pressed["Pause"]:
                 name = self.name_input.get_name()
-                save.table.change_name(name, self.player_button.get_index())
-                self.player_button.set_options(save.table.players)
+                save.score_list.change_name(name, self.player_button.get_index())
+                self.player_button.set_options(save.score_list.players)
                 self.name_input_enabled = False
                 return 1
             elif self.name_input.update():
                 return 1
         else:
-            if controller.is_Y_pressed():
+            if controller.just_pressed["Pause"] and not self.name_input_enabled:
                 self.name_input_enabled = True
                 self.name_input.set_name(self.player_button.get_text())
                 return 1
@@ -81,6 +82,7 @@ class StartMenu:
     def draw(self) -> None:
         self.text.draw()
         self.text2.draw()
+        self.text3.draw()
 
         if self.name_input_enabled:
             self.name_input.draw()
