@@ -5,28 +5,25 @@ from typing import List, Optional
 import t_draw
 
 
-well: List[List[Optional[str]]] = [
+cubes_in_well: List[List[Optional[str]]] = [
     [None for _ in range(s.COLUMNS)] for _ in range(s.ROWS)
 ]
-border: List[Cube] = []
 lines_cleared = 0
 
 
 def add(c: Cube) -> None:
-    well[int(c.position.y // s.CELL_SIZE)][
+    cubes_in_well[int(c.position.y // s.CELL_SIZE)][
         int(c.position.x // s.CELL_SIZE) - 1
     ] = c.color_tag
 
 
 def clear() -> None:
-    global well
-    well = [[None for _ in range(s.COLUMNS)] for _ in range(s.ROWS)]
+    global cubes_in_well
+    cubes_in_well = [[None for _ in range(s.COLUMNS)] for _ in range(s.ROWS)]
 
 
 def draw() -> None:
-    for i in border:
-        t_draw.cube(i.position.x, i.position.y, i.color_tag)
-    for i, col in enumerate(well):
+    for i, col in enumerate(cubes_in_well):
         for j, cube in enumerate(col):
             if cube:
                 t_draw.cube((j + 1) * s.CELL_SIZE, i * s.CELL_SIZE, cube)
@@ -34,9 +31,9 @@ def draw() -> None:
 
 def clear_lines() -> None:
     lines = 0
-    for i, row in enumerate(well):
+    for i, row in enumerate(cubes_in_well):
         if None not in row:
-            well.pop(i)
-            well.insert(0, [None for _ in range(s.COLUMNS)])
+            cubes_in_well.pop(i)
+            cubes_in_well.insert(0, [None for _ in range(s.COLUMNS)])
             lines += 1
     stats.score.add(lines)

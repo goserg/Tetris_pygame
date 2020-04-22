@@ -1,22 +1,27 @@
-from utils.dataclasses_ import Cube, Position
 import data.settings as s
-import well
+import t_draw
+from utils.dataclasses_ import Position
+from typing import List
 
 
 class Border:
+    __slots__ = ("color_tag", "positions")
+
     def __init__(self) -> None:
         self.color_tag = "Border"
-        self.generate_border()
+        self.positions: List[Position] = []
+        self.generate_floor()
+        self.generate_sides()
 
-    def generate_border(self) -> None:
+    def generate_floor(self) -> None:
         for i in range(0, s.COLUMNS * s.CELL_SIZE, s.CELL_SIZE):
-            cube = Cube(
-                Position(i + 1 * s.CELL_SIZE, (s.ROWS - 1) * s.CELL_SIZE),
-                self.color_tag,
-            )
-            well.border.append(cube)
+            self.positions.append(Position(i + 1 * s.CELL_SIZE, (s.ROWS - 1) * s.CELL_SIZE))
+
+    def generate_sides(self) -> None:
         for i in range(-1 * s.CELL_SIZE, s.ROWS * s.CELL_SIZE, s.CELL_SIZE):
-            cube = Cube(Position(0, i), self.color_tag)
-            well.border.append(cube)
-            cube = Cube(Position((s.COLUMNS + 1) * s.CELL_SIZE, i), self.color_tag)
-            well.border.append(cube)
+            self.positions.append(Position(0, i))
+            self.positions.append(Position((s.COLUMNS + 1) * s.CELL_SIZE, i))
+
+    def draw(self) -> None:
+        for i in self.positions:
+            t_draw.cube(i.x, i.y, self.color_tag)

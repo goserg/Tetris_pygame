@@ -27,9 +27,9 @@ def move_down():
     for i in shade.body:
         cell_x = i.position.x // s.CELL_SIZE
         cell_y = i.position.y // s.CELL_SIZE + 1
-        if cell_y >= len(well.well) - 1:
+        if cell_y >= len(well.cubes_in_well) - 1:
             return 1
-        if well.well[cell_y][cell_x - 1]:
+        if well.cubes_in_well[cell_y][cell_x - 1]:
             return 1
     for i in shade.body:
         i.position.y += s.CELL_SIZE

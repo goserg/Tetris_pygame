@@ -87,9 +87,9 @@ class Tetromino:
         for i in self.body:
             cell_x = i.position.x // s.CELL_SIZE
             cell_y = i.position.y // s.CELL_SIZE + 1
-            if cell_y >= len(well.well) - 1:
+            if cell_y >= len(well.cubes_in_well) - 1:
                 return False
-            if well.well[cell_y][cell_x - 1]:
+            if well.cubes_in_well[cell_y][cell_x - 1]:
                 return False
         return True
 
@@ -102,9 +102,9 @@ class Tetromino:
         for i in self.body:
             cell_x = i.position.x // s.CELL_SIZE + direct
             cell_y = i.position.y // s.CELL_SIZE
-            if cell_x <= 0 or cell_x > len(well.well[0]):
+            if cell_x <= 0 or cell_x > len(well.cubes_in_well[0]):
                 return False
-            if well.well[cell_y][cell_x - 1]:
+            if well.cubes_in_well[cell_y][cell_x - 1]:
                 return False
         return True
 
@@ -124,13 +124,13 @@ class Tetromino:
         for i in self.body:
             cell_x = i.position.x // s.CELL_SIZE
             cell_y = i.position.y // s.CELL_SIZE
-            if cell_y >= len(well.well) - 1:
+            if cell_y >= len(well.cubes_in_well) - 1:
                 self._rotate_back()
                 return False
-            if cell_x <= 0 or cell_x > len(well.well[0]):
+            if cell_x <= 0 or cell_x > len(well.cubes_in_well[0]):
                 self._rotate_back()
                 return False
-            if well.well[cell_y][cell_x - 1]:
+            if well.cubes_in_well[cell_y][cell_x - 1]:
                 self._rotate_back()
                 return False
         shade.shade._rotate()

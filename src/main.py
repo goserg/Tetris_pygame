@@ -36,9 +36,9 @@ class Game:
         self.state = GameState.MENU
 
         self.grid = Grid()
-        self.border = Border()
         self.menu = Menu()
         self.start_menu = StartMenu()
+        self.border = Border()
 
         self.clock = pygame.time.Clock()
         self.running = True
@@ -68,6 +68,7 @@ class Game:
             ):
                 shade.draw()
                 self.player.draw()
+                self.border.draw()
                 next_indicator.draw()
                 well.draw()
                 ui.draw(self.state)
@@ -139,7 +140,7 @@ class Game:
         for i in self.player.body:
             cell_x = i.position.x // s.CELL_SIZE
             cell_y = i.position.y // s.CELL_SIZE
-            if well.well[cell_y][cell_x - 1]:
+            if well.cubes_in_well[cell_y][cell_x - 1]:
                 return True
         return False
 
