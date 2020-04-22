@@ -3,6 +3,7 @@ import utils.controller as controller
 from ui.text import Text
 import stats.score
 import data.settings as s
+from utils.dataclasses_ import Position
 
 from ui.switcher_button import SwitcherButton
 
@@ -14,11 +15,16 @@ import stats.level
 class StartMenu:
     def __init__(self) -> None:
         self.move_timer = 0
-        self.text = Text("select player", (200, 200, 200), 30, s.WIN_W / 2, 50)
-        self.text2 = Text(
-            "Start to change current player name", (200, 200, 200), 15, s.WIN_W / 2, 75
+        self.text = Text(
+            "select player", (200, 200, 200), 30, Position(s.WIN_W / 2, 50)
         )
-        self.text3 = Text("A to play", (200, 200, 200), 15, s.WIN_W / 2, 95)
+        self.text2 = Text(
+            "Start to change current player name",
+            (200, 200, 200),
+            15,
+            Position(s.WIN_W / 2, 75),
+        )
+        self.text3 = Text("A to play", (200, 200, 200), 15, Position(s.WIN_W / 2, 95))
 
         self.name_input = NameInput()
         self.name_input_enabled = False
@@ -28,8 +34,7 @@ class StartMenu:
             0,
             (200, 200, 200),
             20,
-            s.WIN_W / 4 + 20,
-            s.WIN_H / 2,
+            Position(s.WIN_W / 4 + 20, s.WIN_H / 2),
             horizontal=True,
         )
         self.level_button = SwitcherButton(
@@ -37,8 +42,7 @@ class StartMenu:
             0,
             (200, 200, 200),
             20,
-            s.WIN_W * 3 / 4,
-            s.WIN_H / 2,
+            Position(s.WIN_W * 3 / 4, s.WIN_H / 2),
             horizontal=False,
         )
 

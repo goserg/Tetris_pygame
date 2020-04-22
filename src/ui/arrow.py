@@ -2,20 +2,19 @@ from utils.window_manager import window
 import utils.controller as controller
 import data.settings as s
 import pygame
+from utils.dataclasses_ import Position
 
 
 class Arrow:
     def __init__(
         self,
-        x: int,
-        y: int,
+        position: Position,
         size: int,
         horizontal: bool = True,
         flip: bool = False,
         tag: str = None,
     ) -> None:
-        self.x = x
-        self.y = y
+        self.position = position
         self.size = size
         self.color = (100, 100, 100)
         self.selected = False
@@ -39,8 +38,8 @@ class Arrow:
         return False
 
     def draw(self) -> None:
-        x = self.x * s.scale
-        y = self.y * s.scale
+        x = self.position.x * s.scale
+        y = self.position.y * s.scale
         size = self.size * s.scale
 
         if self.horizontal:

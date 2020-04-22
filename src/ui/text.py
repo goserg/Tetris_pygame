@@ -1,13 +1,13 @@
 from ui.text_drawer import display_text
+from utils.dataclasses_ import Position
 
 
 class Text:
-    def __init__(self, text: str, color: tuple, size: int, x: int, y: int) -> None:
+    def __init__(self, text: str, color: tuple, size: int, position: Position) -> None:
         self.text = text
         self.size = size
-        self.x = x
-        self.y = y
+        self.position = position
         self.color = color
 
     def draw(self) -> None:
-        display_text(self.text, self.color, self.size, self.x, self.y)
+        display_text(self.text, self.color, self.size, self.position)

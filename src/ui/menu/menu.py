@@ -7,6 +7,7 @@ import utils.controller as controller
 import data.settings as s
 import stats.high_score as high_score
 from ui.menu.start_menu import StartMenu
+from utils.dataclasses_ import Position
 
 
 class Menu:
@@ -25,8 +26,7 @@ class Menu:
                 "PLAY",
                 self.ButtonPos.PLAY.value,
                 50,
-                s.WIN_W * s.scale / 2,
-                130 * s.scale,
+                Position(s.WIN_W * s.scale / 2, 130 * s.scale),
                 window,
             )
         )
@@ -35,8 +35,7 @@ class Menu:
                 "SCORE",
                 self.ButtonPos.SCORE.value,
                 30,
-                s.WIN_W * s.scale / 2,
-                200 * s.scale,
+                Position(s.WIN_W * s.scale / 2, 200 * s.scale),
                 window,
             )
         )
@@ -45,8 +44,7 @@ class Menu:
                 "QUIT",
                 self.ButtonPos.QUIT.value,
                 30,
-                s.WIN_W * s.scale / 2,
-                250 * s.scale,
+                Position(s.WIN_W * s.scale / 2, 250 * s.scale),
                 window,
             )
         )
@@ -92,7 +90,7 @@ class Menu:
     def update_score(self) -> None:
         self.score_screen = []
         self.score_screen.append(
-            Text("High scores:", (200, 200, 200), 30, s.WIN_W / 2, 50)
+            Text("High scores:", (200, 200, 200), 30, Position(s.WIN_W / 2, 50))
         )
         for i, score in enumerate(high_score.score_list.score_list):
             self.score_screen.append(
@@ -102,8 +100,7 @@ class Menu:
                     else "...vacant...",
                     (200, 200, 200),
                     20,
-                    s.WIN_W / 2,
-                    100 + (i + 1) * 30,
+                    Position(s.WIN_W / 2, 100 + (i + 1) * 30),
                 )
             )
 

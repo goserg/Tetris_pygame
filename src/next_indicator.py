@@ -1,5 +1,5 @@
 import tetromino.generator
-import tetromino.collection
+import tetromino.tetromino_collection
 from tetromino.tetromino import Tetromino
 import data.settings as s
 from utils.dataclasses_ import Position
@@ -16,9 +16,9 @@ def change() -> None:
     next_one.position = Position(0, 0)
     next_one.set_0_rotation()
 
-    if type(next_one) == tetromino.collection.TypeI:
+    if type(next_one) == tetromino.tetromino_collection.TypeI:
         x = 250
-    elif type(next_one) == tetromino.collection.TypeO:
+    elif type(next_one) == tetromino.tetromino_collection.TypeO:
         x = 270
     else:
         x = 260
@@ -26,9 +26,7 @@ def change() -> None:
 
 def draw():
     for i in next_one.body:
-        t_draw.cube(
-            x + i.position.x * s.CELL_SIZE, y + i.position.y * s.CELL_SIZE, i.color_tag
-        )
+        t_draw.cube(x + i.position.x, y + i.position.y, i.color_tag)
 
 
 change()

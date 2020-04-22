@@ -10,7 +10,7 @@ import t_draw
 class Tetromino:
     def __init__(self) -> None:
         self.body = []
-        self.position = Position(5, 0)
+        self.position = Position(5 * s.CELL_SIZE, 0)
         self.state = 0
         self._one = Cube()
         self._two = Cube()
@@ -85,27 +85,26 @@ class Tetromino:
 
     def _can_move_down(self) -> bool:
         for i in self.body:
-            x = i.position.x
-            y = i.position.y + 1
-            if y >= len(well.well) - 1:
+            cell_x = i.position.x // s.CELL_SIZE
+            cell_y = i.position.y // s.CELL_SIZE + 1
+            if cell_y >= len(well.well) - 1:
                 return False
-            if well.well[y][x - 1]:
+            if well.well[cell_y][cell_x - 1]:
                 return False
         return True
 
     def _move_down(self) -> None:
         for i in self.body:
-            y = i.position.y
-            i.position.y = y + 1
-        self.position.y += 1
+            i.position.y += s.CELL_SIZE
+        self.position.y += s.CELL_SIZE
 
     def _can_slide(self, direct: int) -> bool:
         for i in self.body:
-            x = i.position.x + direct
-            y = i.position.y
-            if x <= 0 or x > len(well.well[0]):
+            cell_x = i.position.x // s.CELL_SIZE + direct
+            cell_y = i.position.y // s.CELL_SIZE
+            if cell_x <= 0 or cell_x > len(well.well[0]):
                 return False
-            if well.well[y][x - 1]:
+            if well.well[cell_y][cell_x - 1]:
                 return False
         return True
 
@@ -114,8 +113,8 @@ class Tetromino:
         :param direct: positive if move right, negative if move left
         """
         for i in self.body:
-            i.position.x += direct
-        self.position.x += direct
+            i.position.x += direct * s.CELL_SIZE
+        self.position.x += direct * s.CELL_SIZE
 
     def _try_rotation(self) -> bool:
         """
@@ -123,15 +122,15 @@ class Tetromino:
         """
         self._rotate()
         for i in self.body:
-            x = i.position.x
-            y = i.position.y
-            if y >= len(well.well) - 1:
+            cell_x = i.position.x // s.CELL_SIZE
+            cell_y = i.position.y // s.CELL_SIZE
+            if cell_y >= len(well.well) - 1:
                 self._rotate_back()
                 return False
-            if x <= 0 or x > len(well.well[0]):
+            if cell_x <= 0 or cell_x > len(well.well[0]):
                 self._rotate_back()
                 return False
-            if well.well[y][x - 1]:
+            if well.well[cell_y][cell_x - 1]:
                 self._rotate_back()
                 return False
         shade.shade._rotate()
@@ -205,6 +204,4 @@ class Tetromino:
 
     def draw(self) -> None:
         for i in self.body:
-            t_draw.cube(
-                i.position.x * s.CELL_SIZE, i.position.y * s.CELL_SIZE, i.color_tag
-            )
+            t_draw.cube(i.position.x, i.position.y, i.color_tag)

@@ -9,13 +9,14 @@ class Border:
         self.generate_border()
 
     def generate_border(self) -> None:
-        cols = s.GAME_W // s.CELL_SIZE
-        rows = s.GAME_H // s.CELL_SIZE
-        for i in range(0, cols - 2):
-            cube = Cube(Position(i + 1, rows - 1), self.color_tag)
+        for i in range(0, s.COLUMNS * s.CELL_SIZE, s.CELL_SIZE):
+            cube = Cube(
+                Position(i + 1 * s.CELL_SIZE, (s.ROWS - 1) * s.CELL_SIZE),
+                self.color_tag,
+            )
             well.border.append(cube)
-        for i in range(-1, rows):
+        for i in range(-1 * s.CELL_SIZE, s.ROWS * s.CELL_SIZE, s.CELL_SIZE):
             cube = Cube(Position(0, i), self.color_tag)
             well.border.append(cube)
-            cube = Cube(Position(cols - 1, i), self.color_tag)
+            cube = Cube(Position((s.COLUMNS + 1) * s.CELL_SIZE, i), self.color_tag)
             well.border.append(cube)

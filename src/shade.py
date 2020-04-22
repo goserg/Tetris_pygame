@@ -25,17 +25,17 @@ def update_pos(player: Tetromino) -> None:
 
 def move_down():
     for i in shade.body:
-        x = i.position.x
-        y = i.position.y + 1
-        if y >= len(well.well) - 1:
+        cell_x = i.position.x // s.CELL_SIZE
+        cell_y = i.position.y // s.CELL_SIZE + 1
+        if cell_y >= len(well.well) - 1:
             return 1
-        if well.well[y][x - 1]:
+        if well.well[cell_y][cell_x - 1]:
             return 1
     for i in shade.body:
-        i.position.y += 1
-    shade.position.y += 1
+        i.position.y += s.CELL_SIZE
+    shade.position.y += s.CELL_SIZE
 
 
 def draw():
     for i in shade.body:
-        t_draw.shade(i.position.x * s.CELL_SIZE, i.position.y * s.CELL_SIZE)
+        t_draw.shade(i.position.x, i.position.y)

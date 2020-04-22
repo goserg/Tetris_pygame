@@ -4,9 +4,10 @@ import data.settings as s
 from utils.window_manager import window
 import utils.controller as controller
 import pygame
+from utils.dataclasses_ import Position
 
 LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
-MAX_LEN = 15
+MAX_NAME_LEN = 15
 
 
 class NameInput:
@@ -18,30 +19,35 @@ class NameInput:
         self.plate = pygame.Surface((300 * s.scale, 300 * s.scale))
 
         self.game_over = Text(
-            "Name change", (255, 255, 255), 30, s.WIN_W // 2, s.WIN_H // 4
+            "Name change", (255, 255, 255), 30, Position(s.WIN_W // 2, s.WIN_H // 4)
         )
         self.name_text = Text(
-            self.name, (255, 255, 255), 30, s.WIN_W // 2, s.WIN_H * 2 // 4
+            self.name, (255, 255, 255), 30, Position(s.WIN_W // 2, s.WIN_H * 2 // 4)
         )
         self.press_a_btn = Text(
-            "A to select letter", (255, 255, 255), 15, s.WIN_W // 2, s.WIN_H * 3 // 4
+            "A to select letter",
+            (255, 255, 255),
+            15,
+            Position(s.WIN_W // 2, s.WIN_H * 3 // 4),
         )
         self.press_start_btn = Text(
-            "Start to confirm", (255, 255, 255), 15, s.WIN_W // 2, s.WIN_H * 3 // 4 + 15
+            "Start to confirm",
+            (255, 255, 255),
+            15,
+            Position(s.WIN_W // 2, s.WIN_H * 3 // 4 + 15),
         )
         self.press_b_btn = Text(
             "B to clear letter",
             (255, 255, 255),
             15,
-            s.WIN_W // 2,
-            s.WIN_H * 3 // 4 + 30,
+            Position(s.WIN_W // 2, s.WIN_H * 3 // 4 + 30),
         )
         x0 = 0
         y0 = 0
         for letter in LETTERS:
             x = x0 * 15 * s.scale + 90 * s.scale
             y = y0 * 20 * s.scale + 75 * s.scale
-            self.buttons.append(Button(letter, letter, 14, x, y, self.plate))
+            self.buttons.append(Button(letter, letter, 14, Position(x, y), self.plate))
             x0 += 1
             if x0 == 9:
                 x0 = 0
@@ -107,7 +113,7 @@ class NameInput:
     def add_letter(self) -> None:
         if self.name == "enter your name" and self.letter != " ":
             self.name = self.letter
-        elif len(self.name) < MAX_LEN:
+        elif len(self.name) < MAX_NAME_LEN:
             self.name += self.letter
         self.name_text.text = self.name
 

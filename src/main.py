@@ -137,9 +137,9 @@ class Game:
 
     def is_game_over(self) -> bool:
         for i in self.player.body:
-            x = i.position.x
-            y = i.position.y
-            if well.well[y][x - 1]:
+            cell_x = i.position.x // s.CELL_SIZE
+            cell_y = i.position.y // s.CELL_SIZE
+            if well.well[cell_y][cell_x - 1]:
                 return True
         return False
 

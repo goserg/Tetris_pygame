@@ -1,6 +1,7 @@
 import utils.controller as controller
 from ui.text import Text
 from ui.arrow import Arrow
+from utils.dataclasses_ import Position
 
 
 class SwitcherButton:
@@ -19,33 +20,29 @@ class SwitcherButton:
         current_index: int,
         color: tuple,
         size: int,
-        x: int,
-        y: int,
+        position: Position,
         horizontal: bool = True,
     ) -> None:
         self._options = options
         self._current_index = current_index
         self.color = color
         self.size = size
-        self.x = x
-        self.y = y
+        self.position = position
         self.horizontal = horizontal
 
-        self._text = Text(options[current_index], color, size, x, y)
+        self._text = Text(options[current_index], color, size, position)
 
         if horizontal:
             self.width = int(size * (len(options[current_index])) / 3.3 + 5)
             self.ar1 = Arrow(
-                self._text.x - self.width,
-                self._text.y,
+                Position(self._text.position.x - self.width, self._text.position.y),
                 size,
                 horizontal=True,
                 flip=False,
                 tag="Left",
             )
             self.ar2 = Arrow(
-                self._text.x + self.width,
-                self._text.y,
+                Position(self._text.position.x + self.width, self._text.position.y),
                 size,
                 horizontal=True,
                 flip=True,
@@ -53,16 +50,14 @@ class SwitcherButton:
             )
         else:
             self.ar1 = Arrow(
-                self._text.x,
-                self._text.y - size,
+                Position(self._text.position.x, self._text.position.y - size),
                 size,
                 horizontal=False,
                 flip=False,
                 tag="Up",
             )
             self.ar2 = Arrow(
-                self._text.x,
-                self._text.y + size,
+                Position(self._text.position.x, self._text.position.y + size),
                 size,
                 horizontal=False,
                 flip=True,
@@ -93,8 +88,8 @@ class SwitcherButton:
         self._text.text = self._options[self._current_index]
         if self.horizontal:
             self.width = self.size * (len(self._options[self._current_index])) / 3.3 + 5
-            self.ar1.x = self._text.x - self.width
-            self.ar2.x = self._text.x + self.width
+            self.ar1.position.x = self._text.position.x - self.width
+            self.ar2.position.x = self._text.position.x + self.width
 
     def draw(self) -> None:
         self._text.draw()
