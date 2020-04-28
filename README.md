@@ -1,14 +1,15 @@
 # Tetris
 Python & pygame
+recommended XBOX 360 For Windows (Controller)  
 
 ![v0.6 screenshot](img/0.6-alpha.png?raw=true "v0.6 screenshot")  
 
-
-recommended XBOX 360 For Windows (Controller)  
-
 pygame 1.9.6 required
 
-Controls:  
+# Installation
+pip install -r requirements.txt
+
+# Controls  
 =keyboard(gamepad)=  
 Move left - Arrow left (D-pad left)    
 Move right - Arrow right (D-pad right)  
@@ -19,9 +20,11 @@ Menu back - Escape (B)
 Pause - Escape (Start)
 
 
+# console arguments  
+
 usage: main.py [-h] [-sc] [-f] [-g] [-sh] [-wp] [-c]
 
-optional arguments:  
+optional arguments:
 
 | Argument | Description |
 | - | - |  
