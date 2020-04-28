@@ -1,7 +1,6 @@
 import tetromino.generator
 import tetromino.tetromino_collection
 from tetromino.tetromino import Tetromino
-import data.settings as s
 from utils.dataclasses_ import Position
 import t_draw
 

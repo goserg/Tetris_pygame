@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
@@ -10,11 +11,11 @@ class Position:
 
 @dataclass
 class Cube:
-    __slots__ = ("color_tag", "position")
+    __slots__ = ("position", "color_tag")
 
-    position: Position
-    color_tag: str
+    position: Optional[Position]
+    color_tag: Optional[str]
 
-    def __init__(self, position=Position(0, 0), color_tag="Border") -> None:
+    def __init__(self, position=None, color_tag=None) -> None:
         self.position = position
         self.color_tag = color_tag

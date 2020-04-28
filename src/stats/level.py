@@ -57,7 +57,8 @@ def set_level(lines: int) -> None:
         s.speed = LEVEL_SPEEDS[level]
     else:
         s.speed = LEVEL_SPEEDS[-1]
-    color_scheme_update()
+    if not s.standard_colors:
+        color_scheme_update()
     t_draw.compute_colors(s.color_scheme)
     ui.level_block.lst[1].text = str(level)
 

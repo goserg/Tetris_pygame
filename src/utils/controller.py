@@ -13,7 +13,6 @@ pressed = {
     "Right": False,
     "Up": False,
     "Down": False,
-    "Drop": False,
     "Clear": False,
 }
 
@@ -35,7 +34,6 @@ def get_keys() -> None:
         "Right": False,
         "Up": False,
         "Down": False,
-        "Drop": False,
         "Clear": False,
     }
     keys = pygame.key.get_pressed()
@@ -103,14 +101,6 @@ def get_keys() -> None:
         pressed["Up"] = True
     else:
         pressed["Up"] = False
-
-    # Hard drop
-    if keys[pygame.K_SPACE] or joy_direct[1] == 1:
-        if not pressed["Drop"]:
-            just_pressed["Drop"] = True
-        pressed["Drop"] = True
-    else:
-        pressed["Drop"] = False
 
     # Clear
     if keys[pygame.K_BACKSPACE] or gamepad.is_B_pressed():

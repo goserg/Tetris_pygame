@@ -11,6 +11,8 @@ speed = 48  # 1 - maximum
 flat_graphics_enabled = False
 grid_enabled = False
 is_wall_push_enabled = True
+is_shade_enabled = True
+standard_colors = False
 
 COLUMNS = 10
 ROWS = 22
@@ -22,12 +24,9 @@ GAME_H = 440
 GAME_W = 240
 CELL_SIZE = 20
 
-scale = 2
+scale = 1
 
-color_scheme = color_scheme.level_1
-
-# controls
-drop_enabled = False  # is Hard Drop is used
+color_scheme = color_scheme.standard_color
 
 # font
 FONT = "lucidasanstypewriter"

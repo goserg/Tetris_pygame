@@ -8,18 +8,13 @@ import t_draw
 
 
 class Tetromino:
+    __slots__ = ("position", "state", "body", "_move_timer", "_fall_timer", "moved", "landed")
+
     def __init__(self) -> None:
-        self.body = []
         self.position = Position(5 * s.CELL_SIZE, 0)
         self.state = 0
-        self._one = Cube()
-        self._two = Cube()
-        self._three = Cube()
-        self._four = Cube()
-        self.body.append(self._one)
-        self.body.append(self._two)
-        self.body.append(self._three)
-        self.body.append(self._four)
+
+        self.body = [Cube() for _ in range(4)]
 
         self._move_timer = 0
         self._fall_timer = 0
@@ -70,12 +65,6 @@ class Tetromino:
             self._move_down()
             controller.down_lock = False
             self._fall_timer = 0
-        elif s.drop_enabled and controller.just_pressed["Drop"]:
-            self._fall_timer = 0
-            self._drop()
-            self.landed = True
-            self.moved = True
-            return
         self._move_timer -= 1
         self._fall_timer += 1
 
@@ -133,7 +122,8 @@ class Tetromino:
             if well.cubes_in_well[cell_y][cell_x - 1]:
                 self._rotate_back()
                 return False
-        shade.shade._rotate()
+        if s.is_shade_enabled:
+            shade.shade._rotate()
         return True
 
     def _wall_push_rotation(self) -> bool:

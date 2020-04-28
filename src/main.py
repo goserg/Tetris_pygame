@@ -14,6 +14,7 @@ from utils.fsm import GameState
 from ui.menu.menu import Menu
 from ui.menu.start_menu import StartMenu
 from time import time
+import utils.args_parser
 
 
 def reset_game() -> None:
@@ -45,16 +46,15 @@ class Game:
         self.to_draw = True
 
         self.player = type(next_indicator.next_one)()
-        shade.shade = type(self.player)()
-        shade.update_pos(self.player)
-        next_indicator.change()
+        self.create_new_player()
 
         self.fps = 0
 
     def create_new_player(self) -> None:
         self.player = type(next_indicator.next_one)()
-        shade.shade = type(self.player)()
-        shade.update_pos(self.player)
+        if s.is_shade_enabled:
+            shade.shade = type(self.player)()
+            shade.update_pos(self.player)
         next_indicator.change()
 
     def draw(self) -> None:
@@ -66,7 +66,8 @@ class Game:
                 or self.state == GameState.PAUSE
                 or self.state == GameState.GAME_OVER
             ):
-                shade.draw()
+                if s.is_shade_enabled:
+                    shade.draw()
                 self.player.draw()
                 self.border.draw()
                 next_indicator.draw()
@@ -123,7 +124,8 @@ class Game:
             self.state = GameState.PAUSE
         self.player.update()
         if self.player.moved:
-            shade.update_pos(self.player)
+            if s.is_shade_enabled:
+                shade.update_pos(self.player)
             self.to_draw = True
         if self.player.landed:
             self.create_new_player()
@@ -152,6 +154,7 @@ class Game:
             self.menu.update_score()
 
 
+parser = utils.args_parser.ArgsParser()
 pygame.init()
 controller.gamepad = GamepadController()
 controller.keys = pygame.key.get_pressed()
