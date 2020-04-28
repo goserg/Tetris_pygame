@@ -195,3 +195,6 @@ class Tetromino:
     def draw(self) -> None:
         for i in self.body:
             t_draw.cube(i.position.x, i.position.y, i.color_tag)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.position.x}, {self.position.y})"
