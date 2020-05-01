@@ -1,4 +1,5 @@
 import random
+
 from tetromino.tetromino_collection import *
 
 tetromino_set = (TypeI, TypeJ, TypeL, TypeO, TypeS, TypeT, TypeZ)

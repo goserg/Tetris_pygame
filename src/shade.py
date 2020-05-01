@@ -1,7 +1,7 @@
-import well
 import data.settings as s
 from tetromino.tetromino import Tetromino
-import t_draw
+import well
+import draw_manager
 
 
 shade: Tetromino
@@ -38,4 +38,4 @@ def move_down():
 
 def draw():
     for i in shade.body:
-        t_draw.shade(i.position.x, i.position.y)
+        draw_manager.shade(i.position.x, i.position.y)

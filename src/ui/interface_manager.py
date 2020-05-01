@@ -50,4 +50,4 @@ class UI:
         self.fps.text = "fps: " + fps
 
 
-ui = UI()
+interface = UI()

@@ -1,6 +1,7 @@
-import data.settings as s
 import pygame
+
 from utils.dataclasses_ import Position
+import data.settings as s
 
 
 class Button:

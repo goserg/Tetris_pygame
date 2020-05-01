@@ -1,5 +1,5 @@
 import stats.level
-from ui.ui import ui
+import ui.interface_manager
 
 score = 0
 lines = 0
@@ -29,6 +29,6 @@ def add(lns: int) -> None:
         inc = 1200
     score += inc * (stats.level.level + 1)
     lines += lns
-    ui.score_block.lst[1].text = str(score)
-    ui.lines_cleared_block.lst[1].text = str(lines)
+    ui.interface_manager.interface.score_block.lst[1].text = str(score)
+    ui.interface_manager.interface.lines_cleared_block.lst[1].text = str(lines)
     stats.level.set_level(lines)

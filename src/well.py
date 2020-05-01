@@ -2,7 +2,7 @@ import data.settings as s
 from utils.dataclasses_ import Cube
 import stats.score
 from typing import List, Optional
-import t_draw
+import draw_manager
 
 
 cubes_in_well: List[List[Optional[str]]] = [
@@ -26,7 +26,7 @@ def draw() -> None:
     for i, col in enumerate(cubes_in_well):
         for j, cube in enumerate(col):
             if cube:
-                t_draw.cube((j + 1) * s.CELL_SIZE, i * s.CELL_SIZE, cube)
+                draw_manager.cube((j + 1) * s.CELL_SIZE, i * s.CELL_SIZE, cube)
 
 
 def clear_lines() -> None:

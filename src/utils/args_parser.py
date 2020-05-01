@@ -1,4 +1,5 @@
 import argparse
+
 import data.settings as s
 import utils.window_manager
 

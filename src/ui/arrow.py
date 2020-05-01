@@ -1,8 +1,9 @@
-from utils.window_manager import window
-import utils.controller as controller
-import data.settings as s
 import pygame
+
+import utils.controller as controller
+import utils.window_manager
 from utils.dataclasses_ import Position
+import data.settings as s
 
 
 class Arrow:
@@ -44,7 +45,7 @@ class Arrow:
 
         if self.horizontal:
             pygame.draw.polygon(
-                window,
+                utils.window_manager.window,
                 self.color,
                 (
                     (x, y + size / 2),
@@ -54,7 +55,7 @@ class Arrow:
             )
         else:
             pygame.draw.polygon(
-                window,
+                utils.window_manager.window,
                 self.color,
                 (
                     (x - size / 2, y),

@@ -1,10 +1,11 @@
+import pygame
+
+from utils.dataclasses_ import Position
+import utils.window_manager
+import utils.controller as controller
 from ui.button import Button
 from ui.text import Text
 import data.settings as s
-from utils.window_manager import window
-import utils.controller as controller
-import pygame
-from utils.dataclasses_ import Position
 
 LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
 MAX_NAME_LEN = 15
@@ -72,7 +73,7 @@ class NameInput:
 
         surf_rect = self.plate.get_rect()
         surf_rect.center = (s.WIN_W * s.scale / 2, s.WIN_H * s.scale / 2)
-        window.blit(self.plate, surf_rect)
+        utils.window_manager.window.blit(self.plate, surf_rect)
 
         self.game_over.draw()
         self.name_text.draw()

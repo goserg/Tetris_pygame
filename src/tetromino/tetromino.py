@@ -1,10 +1,10 @@
+from utils.dataclasses_ import Cube
+from utils.dataclasses_ import Position
+import utils.controller as controller
+import data.settings as s
 import well
 import shade
-from utils.dataclasses_ import Cube
-import data.settings as s
-import utils.controller as controller
-from utils.dataclasses_ import Position
-import t_draw
+import draw_manager
 
 
 class Tetromino:
@@ -194,7 +194,7 @@ class Tetromino:
 
     def draw(self) -> None:
         for i in self.body:
-            t_draw.cube(i.position.x, i.position.y, i.color_tag)
+            draw_manager.cube(i.position.x, i.position.y, i.color_tag)
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.position.x}, {self.position.y})"

@@ -1,7 +1,7 @@
 import data.settings as s
-import data.colors as colors
-from ui.ui import ui
-import t_draw
+import data.colors
+import ui.interface_manager
+import draw_manager
 
 LEVEL_SPEEDS = [
     48,
@@ -43,9 +43,9 @@ def reset() -> None:
     global level
     level = 0
     s.speed = LEVEL_SPEEDS[level]
-    ui.level_block.lst[1].text = str(level)
-    s.color_scheme = colors.level_1
-    t_draw.compute_colors(s.color_scheme)
+    ui.interface_manager.interface.level_block.lst[1].text = str(level)
+    s.color_scheme = data.colors.level_1
+    draw_manager.compute_colors(s.color_scheme)
 
 
 def set_level(lines: int) -> None:
@@ -59,17 +59,17 @@ def set_level(lines: int) -> None:
         s.speed = LEVEL_SPEEDS[-1]
     if not s.standard_colors:
         color_scheme_update()
-    t_draw.compute_colors(s.color_scheme)
-    ui.level_block.lst[1].text = str(level)
+    draw_manager.compute_colors(s.color_scheme)
+    ui.interface_manager.interface.level_block.lst[1].text = str(level)
 
 
 def color_scheme_update() -> None:
     n = level % 4
     if n == 0:
-        s.color_scheme = colors.level_1
+        s.color_scheme = data.colors.level_1
     elif n == 1:
-        s.color_scheme = colors.level_2
+        s.color_scheme = data.colors.level_2
     elif n == 2:
-        s.color_scheme = colors.level_3
+        s.color_scheme = data.colors.level_3
     else:
-        s.color_scheme = colors.level_4
+        s.color_scheme = data.colors.level_4

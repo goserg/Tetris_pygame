@@ -1,4 +1,5 @@
 import pygame
+
 from utils.gamepad_controller import GamepadController
 
 keys = []

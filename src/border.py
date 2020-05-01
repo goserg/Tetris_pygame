@@ -1,7 +1,8 @@
-import data.settings as s
-import t_draw
-from utils.dataclasses_ import Position
 from typing import List
+
+import data.settings as s
+from utils.dataclasses_ import Position
+import draw_manager
 
 
 class Border:
@@ -24,4 +25,4 @@ class Border:
 
     def draw(self) -> None:
         for i in self.positions:
-            t_draw.cube(i.x, i.y, self.color_tag)
+            draw_manager.cube(i.x, i.y, self.color_tag)

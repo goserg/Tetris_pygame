@@ -8,7 +8,7 @@ class TypeI(Tetromino):
 
     def __init__(self) -> None:
         super().__init__()
-        self.position = self.position or Position(4 * s.CELL_SIZE, -s.CELL_SIZE)
+        self.position = Position(4 * s.CELL_SIZE, -s.CELL_SIZE)
         self.set_0_rotation()
         for i in self.body:
             i.color_tag = "TypeI"

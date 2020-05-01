@@ -2,7 +2,7 @@ import tetromino.generator
 import tetromino.tetromino_collection
 from tetromino.tetromino import Tetromino
 from utils.dataclasses_ import Position
-import t_draw
+import draw_manager
 
 next_one: Tetromino
 x = 0
@@ -25,7 +25,7 @@ def change() -> None:
 
 def draw():
     for i in next_one.body:
-        t_draw.cube(x + i.position.x, y + i.position.y, i.color_tag)
+        draw_manager.cube(x + i.position.x, y + i.position.y, i.color_tag)
 
 
 change()

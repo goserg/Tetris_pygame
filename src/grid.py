@@ -1,6 +1,7 @@
-from utils.window_manager import window
-import data.settings as s
 import pygame
+
+import utils.window_manager
+import data.settings as s
 
 
 class Grid:
@@ -13,7 +14,7 @@ class Grid:
         for _ in range(self.cols):
             x += s.CELL_SIZE * s.scale
             pygame.draw.line(
-                window, s.color_scheme["Grid"], (x, 0), (x, s.GAME_H * s.scale)
+                utils.window_manager.window, s.color_scheme["Grid"], (x, 0), (x, s.GAME_H * s.scale)
             )
             pass
 
@@ -22,5 +23,5 @@ class Grid:
             y += s.CELL_SIZE * s.scale
 
             pygame.draw.line(
-                window, s.color_scheme["Grid"], (0, y), (s.GAME_W * s.scale, y)
+                utils.window_manager.window, s.color_scheme["Grid"], (0, y), (s.GAME_W * s.scale, y)
             )

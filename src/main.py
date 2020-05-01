@@ -1,28 +1,30 @@
+from time import time
+
 import pygame
-import utils.window_manager
+
 import data.settings as s
+import utils.window_manager
 import utils.controller as controller
+import utils.args_parser
+from utils.fsm import GameState
 from utils.gamepad_controller import GamepadController
+from ui.interface_manager import interface
+from ui.menu.menu import Menu
+from ui.menu.start_menu import StartMenu
 from grid import Grid
 from border import Border
 import well
 import shade
 import next_indicator
 import stats
-from ui.ui import ui
-from utils.fsm import GameState
-from ui.menu.menu import Menu
-from ui.menu.start_menu import StartMenu
-from time import time
-import utils.args_parser
 
 
 def reset_game() -> None:
     well.clear()
     stats.score.clear()
     well.lines_cleared = 0
-    ui.lines_cleared_block.lst[1].text = "0"
-    ui.score_block.lst[1].text = "0"
+    interface.lines_cleared_block.lst[1].text = "0"
+    interface.score_block.lst[1].text = "0"
     s.speed = 48
 
 
@@ -72,7 +74,7 @@ class Game:
                 self.border.draw()
                 next_indicator.draw()
                 well.draw()
-                ui.draw(self.state)
+                interface.draw(self.state)
                 if s.grid_enabled:
                     self.grid.draw()
             elif self.state == GameState.MENU:
@@ -118,7 +120,7 @@ class Game:
             self.create_new_player()
 
     def update_play_screen(self) -> None:
-        ui.update_fps(str(self.fps))
+        interface.update_fps(str(self.fps))
         if controller.just_pressed["Pause"]:
             self.to_draw = True
             self.state = GameState.PAUSE

@@ -1,4 +1,4 @@
-from ui.text_drawer import display_text
+import ui.text_drawer
 from utils.dataclasses_ import Position
 
 
@@ -10,4 +10,4 @@ class Text:
         self.color = color
 
     def draw(self) -> None:
-        display_text(self.text, self.color, self.size, self.position)
+        ui.text_drawer.display_text(self.text, self.color, self.size, self.position)

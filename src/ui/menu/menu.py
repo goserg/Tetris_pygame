@@ -1,13 +1,14 @@
-from utils.window_manager import window
+from enum import Enum
+
+from utils.dataclasses_ import Position
+import utils.window_manager
+import utils.controller as controller
 from utils.fsm import MenuState
 from ui.button import Button
 from ui.text import Text
-from enum import Enum
-import utils.controller as controller
+from ui.menu.start_menu import StartMenu
 import data.settings as s
 import stats.high_score as high_score
-from ui.menu.start_menu import StartMenu
-from utils.dataclasses_ import Position
 
 
 class Menu:
@@ -27,7 +28,7 @@ class Menu:
                 self.ButtonPos.PLAY.value,
                 50,
                 Position(s.WIN_W * s.scale / 2, 130 * s.scale),
-                window,
+                utils.window_manager.window,
             )
         )
         self.main_screen.append(
@@ -36,7 +37,7 @@ class Menu:
                 self.ButtonPos.SCORE.value,
                 30,
                 Position(s.WIN_W * s.scale / 2, 200 * s.scale),
-                window,
+                utils.window_manager.window,
             )
         )
         self.main_screen.append(
@@ -45,7 +46,7 @@ class Menu:
                 self.ButtonPos.QUIT.value,
                 30,
                 Position(s.WIN_W * s.scale / 2, 250 * s.scale),
-                window,
+                utils.window_manager.window,
             )
         )
         self.update_score()

@@ -1,8 +1,8 @@
-import data.colors as color_scheme
+import data.colors
 
 # game
 NAME = "Tetris"
-VERSION = "0.6-dev-alpha"
+VERSION = "0.7-dev-alpha"
 FPS_CAP = 60
 AUTO_SHIFT = 6
 DELAYED_AUTO_SHIFT = 16
@@ -26,7 +26,7 @@ CELL_SIZE = 20
 
 scale = 1
 
-color_scheme = color_scheme.standard_color
+color_scheme = data.colors.standard_color
 
 # font
 FONT = "lucidasanstypewriter"

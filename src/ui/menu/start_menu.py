@@ -1,15 +1,12 @@
 import stats.high_score as save
-import utils.controller as controller
-from ui.text import Text
-import stats.score
-import data.settings as s
-from utils.dataclasses_ import Position
-
-from ui.switcher_button import SwitcherButton
-
-from ui.menu.name_input import NameInput
-
 import stats.level
+import stats.score
+import utils.controller as controller
+from utils.dataclasses_ import Position
+from ui.text import Text
+from ui.switcher_button import SwitcherButton
+from ui.menu.name_input import NameInput
+import data.settings as s
 
 
 class StartMenu:

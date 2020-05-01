@@ -1,7 +1,7 @@
+from utils.dataclasses_ import Position
 import utils.controller as controller
 from ui.text import Text
 from ui.arrow import Arrow
-from utils.dataclasses_ import Position
 
 
 class SwitcherButton:
