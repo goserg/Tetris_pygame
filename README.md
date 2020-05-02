@@ -2,7 +2,7 @@
 Python & pygame
 recommended XBOX 360 For Windows (Controller)  
 
-![v0.6 screenshot](img/0.6-alpha.png?raw=true "v0.6 screenshot")  
+![v0.7 screenshot](img/0.7-alpha_01.png?raw=true "v0.7 screenshot")![v0.7 screenshot](img/0.7-alpha_02.png?raw=true "v0.7 screenshot")   
 
 pygame 1.9.6 required
 
