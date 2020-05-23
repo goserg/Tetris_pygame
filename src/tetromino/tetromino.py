@@ -76,9 +76,7 @@ class Tetromino:
         for i in self.body:
             cell_x = i.position.x // s.CELL_SIZE
             cell_y = i.position.y // s.CELL_SIZE + 1
-            if cell_y >= len(well.cubes_in_well) - 1:
-                return False
-            if well.cubes_in_well[cell_y][cell_x - 1]:
+            if not self._cell_is_valid(cell_x, cell_y):
                 return False
         return True
 
@@ -91,9 +89,7 @@ class Tetromino:
         for i in self.body:
             cell_x = i.position.x // s.CELL_SIZE + direct
             cell_y = i.position.y // s.CELL_SIZE
-            if cell_x <= 0 or cell_x > len(well.cubes_in_well[0]):
-                return False
-            if well.cubes_in_well[cell_y][cell_x - 1]:
+            if not self._cell_is_valid(cell_x, cell_y):
                 return False
         return True
 
@@ -113,17 +109,21 @@ class Tetromino:
         for i in self.body:
             cell_x = i.position.x // s.CELL_SIZE
             cell_y = i.position.y // s.CELL_SIZE
-            if cell_y >= len(well.cubes_in_well) - 1:
-                self._rotate_back()
-                return False
-            if cell_x <= 0 or cell_x > len(well.cubes_in_well[0]):
-                self._rotate_back()
-                return False
-            if well.cubes_in_well[cell_y][cell_x - 1]:
+            if not self._cell_is_valid(cell_x, cell_y):
                 self._rotate_back()
                 return False
         if s.is_shade_enabled:
             shade.shade._rotate()
+        return True
+
+    @staticmethod
+    def _cell_is_valid(cell_x, cell_y):
+        if cell_y >= len(well.cubes_in_well) - 1:
+            return False
+        if cell_x <= 0 or cell_x > len(well.cubes_in_well[0]):
+            return False
+        if well.cubes_in_well[cell_y][cell_x - 1]:
+            return False
         return True
 
     def _wall_push_rotation(self) -> bool:
